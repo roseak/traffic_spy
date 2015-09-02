@@ -1,5 +1,5 @@
 module TrafficSpy
-  class Registration # < ActiveRecord::Base
+  class Client < ActiveRecord::Base
 
     def initialize(params)
       @identifier = params[:identifier]
