@@ -6,14 +6,14 @@ module TrafficSpy
     end
 
     post '/sources' do
-      client = Client.new(params) 
+      client = Client.new(params)
 
       if client.save
-        body "Successfully created"
+        body client.attributes.select { |k, v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
-          status 400
+        status 400
       end
-        
+
     end
 
     not_found do
