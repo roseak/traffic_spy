@@ -5,6 +5,12 @@ Bundler.require
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'minitest/autorun'
+require 'minitest/pride'
 require 'capybara'
 
 Capybara.app = TrafficSpy::Server
+
+class FeatureTest < Minitest::Test
+  include Capybara::DSL
+end
+
