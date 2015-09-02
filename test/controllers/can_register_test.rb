@@ -28,6 +28,16 @@ class RegisterTest < Minitest::Test
     post('/sources', attributes)
 
     assert_equal 400, last_response.status
+    assert_equal "Root url can't be blank", last_response.body
+  end
+
+  def test_gets_403_when_identifier_already_exists
+    attributes = {:identifier => 'jumpstartlab', :root_url=>'http://jumpstartlab.com'}
+    post('/sources', attributes)
+    post('/sources', attributes)
+
+    assert_equal 403, last_response.status
+    assert_equal "Identifier has already been taken", last_response.body
   end
 
   def setup
