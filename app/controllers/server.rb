@@ -6,18 +6,12 @@ module TrafficSpy
     end
 
     post '/sources' do
-      registration = Client.new(params) 
+      client = Client.new(params) 
 
-      if registration.save
+      if client.save
         body "Successfully created"
-      else
-        if body task.error.full_messages.include("Already exits")
-          status 403
-          body "Already Exists"
-        else
+      elsif client.errors.full_messages.any? { |error| error.include?("blank") }
           status 400
-          body "Missing information"
-        end
       end
         
     end

@@ -8,7 +8,7 @@ class RegisterTest < Minitest::Test
   end
 
   def test_can_register_with_good_params 
-    attributes = {:identifier => 'jumpstartlab', :rootUrl=>'http://jumpstartlab.com'}  
+    attributes = {:identifier => 'jumpstartlab', :root_url=>'http://jumpstartlab.com'}  
     post('/sources', attributes) 
 
     assert_equal 200, last_response.status

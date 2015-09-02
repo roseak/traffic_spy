@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20150902161133) do
 
   create_table "clients", force: :cascade do |t|
     t.text "identifier"
-    t.text "rootUrl"
+    t.text "root_url"
   end
 
 end
