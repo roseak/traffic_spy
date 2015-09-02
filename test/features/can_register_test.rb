@@ -12,7 +12,7 @@ class RegisterTest < Minitest::Test
     post('/sources', attributes)
 
     assert_equal 200, last_response.status
-    assert_equal "{\"identifier\":\"jumpstartlab\"}", last_response.body
+    assert_equal '{"identifier":"jumpstartlab"}', last_response.body
   end
 
   def test_can_register_with_other_params
@@ -20,7 +20,7 @@ class RegisterTest < Minitest::Test
     post('/sources', attributes)
 
     assert_equal 200, last_response.status
-    assert_equal "{\"identifier\":\"jumpstartfab\"}", last_response.body
+    assert_equal '{"identifier":"jumpstartfab"}', last_response.body
   end
 
   def test_gets_400_from_bad_input_params

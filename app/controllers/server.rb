@@ -9,11 +9,9 @@ module TrafficSpy
       client = Client.new(params)
 
       if client.save
-        require "pry"
-        binding.pry
-        body '{"identifier":"jumpstartlab"}'
+        body client.attributes.select { |k, v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
-          status 400
+        status 400
       end
 
     end
