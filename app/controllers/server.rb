@@ -11,7 +11,11 @@ module TrafficSpy
       if client.save
         body client.attributes.select { |k, v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
+        body client.errors.full_messages.first
         status 400
+      else
+        body client.errors.full_messages.first
+        status 403
       end
 
     end
