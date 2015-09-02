@@ -30,4 +30,12 @@ class RegisterTest < Minitest::Test
     assert_equal 400, last_response.status
   end
 
+  def setup
+    DatabaseCleaner.start
+  end
+
+  def teardown
+    DatabaseCleaner.clean
+  end
+
 end
