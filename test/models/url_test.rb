@@ -125,16 +125,15 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_find_all_urls_for_identifier
-    skip
-    
-    setup
-
-    binding.pry
+    # setup
     identifier = 'r3m'
-    assert_equal 7, TrafficSpy::Visit.all.size
 
-    result = TrafficSpy::Url.urls_for_a_client(identifier)
-    assert_equal 3, result
+    # binding.pry
+    assert_equal 7, TrafficSpy::Visit.count
+    assert_equal 4, TrafficSpy::Url.count
+
+    # result = TrafficSpy::Url.urls_for_a_client(identifier)
+    # assert_equal 3, result
   end
 
   def teardown
