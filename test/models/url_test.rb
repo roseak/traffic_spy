@@ -125,15 +125,20 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_find_all_urls_for_identifier
-    # setup
     identifier = 'r3m'
-
-    # binding.pry
-    assert_equal 7, TrafficSpy::Visit.count
-    assert_equal 4, TrafficSpy::Url.count
 
     result = TrafficSpy::Url.urls_for_a_client(identifier)
     assert_equal 3, result.length
+  end
+
+  def test_it_determines_visits_for_urls
+    identifier = 'r3m'
+
+    
+    expected_order = ['blog', 'pizza', 'jonothy']
+    expected_visits = [3, 2, 1]
+
+    # result = TrafficSpy::Url.url_visits(identifier)
   end
 
   def teardown
