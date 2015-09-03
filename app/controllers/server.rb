@@ -30,18 +30,12 @@ module TrafficSpy
       key = Digest::SHA1.hexdigest(long_string)
 
       if !params["url"]
-        require "pry"
-        binding.pry
         status 400
         body "Payload is empty"
       elsif !client
-        require "pry"
-        binding.pry
         status 403
         body "Application not registered"
       elsif Sha.find_by(sha: key)
-        require "pry"
-        binding.pry
         status 403
         body "Already received request"
       else

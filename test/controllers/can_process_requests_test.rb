@@ -1,6 +1,4 @@
 require './test/test_helper'
-require './app/models/client'
-require './app/controllers/payload'
 
 class RegisterTest < Minitest::Test
   include Rack::Test::Methods

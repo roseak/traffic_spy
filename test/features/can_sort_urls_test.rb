@@ -1,7 +1,6 @@
 require './test/test_helper'
-require './app/controllers/payload'
 
-class UrlTest < FeatureTest
+class UrlCanSortTest < FeatureTest
   include Rack::Test::Methods
   attr_reader :payload1, :payload2, :payload3, :payload4, :payload5, :payload6
 
