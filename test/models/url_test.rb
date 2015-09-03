@@ -1,7 +1,7 @@
 require './test/test_helper'
 
 class UrlTest < Minitest::Test
-  include Rack::Test::Methods
+  include Rack::Test::Methods 
   attr_reader :payload1, :payload2, :payload3, :payload4, :payload5, :payload6, :payload7
 
   def app
@@ -9,13 +9,13 @@ class UrlTest < Minitest::Test
   end
 
   def setup
-    attributes = {:identifier => 'r3m', :root_url => 'http://r3m.com'}
+    attributes = {'identifier' => 'r3m', 'rootUrl' => 'http://r3m.com'}
     post('/sources', attributes)
 
-    attributes2 = {:identifier => '123', :root_url => 'http://123.com'}
+    attributes2 = {'identifier' => '123', 'rootUrl' => 'http://123.com'}
     post('/sources', attributes2)
 
-    @payload1 = JSON.parse('{
+    @payload1 = '{
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-02-16 21:38:28 -0700",
       "respondedIn":37,
@@ -27,9 +27,9 @@ class UrlTest < Minitest::Test
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
-    }')
+    }'
 
-    @payload2 = JSON.parse('{
+    @payload2 = '{
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-01-16 21:38:28 -0700",
       "respondedIn":37,
@@ -41,9 +41,9 @@ class UrlTest < Minitest::Test
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
-    }')
+    }'
 
-    @payload3 = JSON.parse('{
+    @payload3 = '{
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-04-16 21:38:28 -0700",
       "respondedIn":37,
@@ -55,9 +55,9 @@ class UrlTest < Minitest::Test
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
-    }')
+    }'
 
-    @payload4 = JSON.parse('{
+    @payload4 = '{
       "url":"http://r3m.com/pizza",
       "requestedAt":"2013-02-16 21:38:28 -0700",
       "respondedIn":37,
@@ -69,9 +69,9 @@ class UrlTest < Minitest::Test
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
-    }')
+    }'
 
-    @payload5 = JSON.parse('{
+    @payload5 = '{
       "url":"http://r3m.com/jonothy",
       "requestedAt":"2013-02-16 21:38:28 -0700",
       "respondedIn":37,
@@ -83,9 +83,9 @@ class UrlTest < Minitest::Test
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
-    }')
+    }'
 
-    @payload6 = JSON.parse('{
+    @payload6 = '{
       "url":"http://r3m.com/pizza",
       "requestedAt":"2013-07-16 21:38:28 -0700",
       "respondedIn":37,
@@ -97,9 +97,9 @@ class UrlTest < Minitest::Test
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
-    }')
+    }'
 
-    @payload7 = JSON.parse('{
+    @payload7 ='{
       "url":"http://123.com/pizza",
       "requestedAt":"2013-07-16 21:38:28 -0700",
       "respondedIn":37,
@@ -111,11 +111,12 @@ class UrlTest < Minitest::Test
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
-    }')
+    }'
   end
 
   def test_can_find_all_urls_for_identifier
     skip
+    
     setup
     post('/sources/r3m/data', payload1)
     post('/sources/r3m/data', payload2)
@@ -125,9 +126,9 @@ class UrlTest < Minitest::Test
     post('/sources/r3m/data', payload6)
     post('/sources/123/data', payload7)
 
-
+binding.pry
     identifier = 'r3m'
-    assert_equal 7, TrafficSpy::Visit.size
+    assert_equal 7, TrafficSpy::Visit.all.size
 
     result = TrafficSpy::Url.urls_for_a_client(identifier)
     assert_equal 3, result

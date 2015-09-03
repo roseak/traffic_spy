@@ -3,33 +3,30 @@ require './test/test_helper'
 class RegisterTest < Minitest::Test
   include Rack::Test::Methods
 
+  attr_reader :payload
+
   def app
     TrafficSpy::Server
   end
 
+  def setup
+    DatabaseCleaner.start
+    @payload = {"payload"=>
+     "{\"url\":\"http://jumpstartlab.com/blog\",\"requestedAt\":\"2013-02-16 21:38:28 -0700\",\"respondedIn\":37,\"referredBy\":\"http://jumpstartlab.com\",\"requestType\":\"GET\",\"parameters\":[],\"eventName\": \"socialLogin\",\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17\",\"resolutionWidth\":\"1920\",\"resolutionHeight\":\"1280\",\"ip\":\"63.29.38.211\"}",
+     "splat"=>[],
+   "captures"=>["jumpstartlab"],
+ "identifier"=>"jumpstartlab"}   
+  end
+
   def test_gets_200_from_good_request
+    setup
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     # {"identifier"=>"apple", "rootUrl"=>"http://apple.com"}
 
     post('/sources', attributes)
 
-    payload = '{
-      "url":"http://r3m.com/blog",
-      "requestedAt":"2013-02-16 21:38:28 -0700",
-      "respondedIn":37,
-      "referredBy":"http://r3m.com",
-      "requestType":"GET",
-      "parameters":[],
-      "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-      "resolutionWidth":"1920",
-      "resolutionHeight":"1280",
-      "ip":"63.29.38.211"
-    }'
 
-    hash = JSON.parse(payload)
-
-    post('/sources/r3m/data', hash)
+    post('/sources/r3m/data', payload)
     # post('/sources/r3m/data', {payload: payload})
 
     url = TrafficSpy::Url.find(1)
@@ -55,36 +52,41 @@ class RegisterTest < Minitest::Test
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
-    hash = {}
-
-    post('/sources/r3m/data', hash)
+    post('/sources/r3m/data', {})
 
     assert_equal 400, last_response.status
     assert_equal "Payload is empty", last_response.body
   end
 
+  def test_gets_400_for_submitting_nothing
+    attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
+    post('/sources', attributes)
+
+    post('/sources/r3m/data')
+
+    assert_equal 400, last_response.status
+    assert_equal "Payload is empty", last_response.body
+  end
+  
+  def test_gets_400_for_submitting_another_nothing
+    attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
+    post('/sources', attributes)
+
+    payload = {'payload' => "{}"}
+
+    post('/sources/r3m/data', payload)
+
+    assert_equal 400, last_response.status
+    assert_equal "Payload is empty", last_response.body
+  end
+  
+
   def test_gets_403_for_duplicate_payload
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
-    payload = '{
-      "url":"http://r3m.com/blog",
-      "requestedAt":"2013-02-16 21:38:28 -0700",
-      "respondedIn":37,
-      "referredBy":"http://r3m.com",
-      "requestType":"GET",
-      "parameters":[],
-      "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-      "resolutionWidth":"1920",
-      "resolutionHeight":"1280",
-      "ip":"63.29.38.211"
-    }'
-
-    hash = JSON.parse(payload)
-
-    post('/sources/r3m/data', hash)
-    post('/sources/r3m/data', hash)
+    post('/sources/r3m/data', payload)
+    post('/sources/r3m/data', payload)
 
     assert_equal 403, last_response.status
     assert_equal "Already received request", last_response.body
@@ -94,30 +96,10 @@ class RegisterTest < Minitest::Test
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
-    payload = '{
-      "url":"http://r3m.com/blog",
-      "requestedAt":"2013-02-16 21:38:28 -0700",
-      "respondedIn":37,
-      "referredBy":"http://r3m.com",
-      "requestType":"GET",
-      "parameters":[],
-      "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-      "resolutionWidth":"1920",
-      "resolutionHeight":"1280",
-      "ip":"63.29.38.211"
-    }'
-
-    hash = JSON.parse(payload)
-
-    post('/sources/123/data', hash)
+    post('/sources/123/data', payload)
 
     assert_equal 403, last_response.status
     assert_equal "Application not registered", last_response.body
-  end
-
-  def setup
-    DatabaseCleaner.start
   end
 
   def teardown

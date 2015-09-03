@@ -9,10 +9,10 @@ module TrafficSpy
     post '/sources' do
       # File.open('./test/params.txt', 'w') { |file| file.write("#{params}") }
       prepped = Client.prep(params)
-
       client = Client.new(prepped)
-
+      
       if client.save
+
         body client.attributes.select { |k, v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
         body client.errors.full_messages.first
@@ -24,11 +24,17 @@ module TrafficSpy
     end
 
     post '/sources/:identifier/data' do |identifier|
-      client = Client.find_by(identifier: identifier)
-      long_string = params.values.join
-      key = Digest::SHA1.hexdigest(long_string)
+      legit = Payload.payload_legit?(params)
 
-      if !params["url"]
+      if legit
+        raw_payload = params.fetch('payload', nil) 
+        parsed = JSON.parse(raw_payload)       
+        client = Client.find_by(identifier: identifier)
+        long_string = parsed.values.join
+        key = Digest::SHA1.hexdigest(long_string)
+      end
+
+      if !legit
         status 400
         body "Payload is empty"
       elsif !client
@@ -38,8 +44,8 @@ module TrafficSpy
         status 403
         body "Already received request"
       else
-        params["client_id"] = "#{client.id}"
-        payload = Payload.new(params)
+        parsed["client_id"] = "#{client.id}"
+        payload = Payload.new(parsed)
         Sha.create(sha: key)
       end
     end
