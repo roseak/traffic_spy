@@ -45,5 +45,20 @@ module TrafficSpy
 
       erb :browsers
     end
+
+    get '/sources/:identifier/os' do |identifier|
+      @params = {
+        identifier: identifier,
+        title: "Operating Systems",
+        data: {
+          "OSX YOSEMITE" => 10,
+          "WINDOWS XP" => 5,
+          "UBUNTU LINUX" => 4,
+          "WINDOWS 2000" => 3,
+        }
+      }
+
+      erb :os
+    end
   end
 end
