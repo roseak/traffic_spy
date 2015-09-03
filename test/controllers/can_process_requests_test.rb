@@ -1,4 +1,6 @@
 require './test/test_helper'
+require './app/models/client'
+require './app/controllers/payload'
 
 class RegisterTest < Minitest::Test
   include Rack::Test::Methods
@@ -30,6 +32,10 @@ class RegisterTest < Minitest::Test
     post('/sources/r3m/data', hash)
 
     assert_equal 200, last_response.status
+    # binding.pry
+    url = TrafficSpy::Url.find(1)
+    assert_equal TrafficSpy::Client.find(1), TrafficSpy::Client.find(url.client_id)
+
   end
 
   def setup

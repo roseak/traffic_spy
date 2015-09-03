@@ -20,6 +20,8 @@ module TrafficSpy
     end
 
     post '/sources/:identifier/data' do |identifier|
+      client = Client.find_by(identifier: identifier)
+      params["client_id"] = "#{client.id}"
       payload = Payload.new(params)
     end
 
