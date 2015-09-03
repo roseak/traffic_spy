@@ -8,23 +8,15 @@ class RegisterTest < Minitest::Test
   end
 
   def test_can_register_with_good_params
-    attributes = {:identifier => 'jumpstartlab', :root_url=>'http://jumpstartlab.com'}
+    attributes = {'identifier' => 'jumpstartlab', 'rootUrl' => 'http://jumpstartlab.com'}
     post('/sources', attributes)
 
     assert_equal 200, last_response.status
     assert_equal '{"identifier":"jumpstartlab"}', last_response.body
   end
 
-  def test_can_register_with_other_params
-    attributes = {:identifier => 'jumpstartfab', :root_url=>'http://jumpstartfab.com'}
-    post('/sources', attributes)
-
-    assert_equal 200, last_response.status
-    assert_equal '{"identifier":"jumpstartfab"}', last_response.body
-  end
-
   def test_gets_400_from_bad_input_params
-    attributes = {:identifier => 'jumpstartlab'}
+    attributes = {'identifier' => 'jumpstartlab'}
     post('/sources', attributes)
 
     assert_equal 400, last_response.status
@@ -33,8 +25,8 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_403_when_identifier_already_exists
-    attributes = {:identifier => 'jumpstartlab', :root_url=>'http://jumpstartlab.com'}
-    post('/sources', attributes)
+    attributes = {'identifier' => 'jumpstartlab', 'rootUrl' =>'http://jumpstartlab.com'}
+    TrafficSpy::Client.create(identifier: 'jumpstartlab', root_url: 'http://jumpstartlab.com')
     post('/sources', attributes)
 
     assert_equal 403, last_response.status

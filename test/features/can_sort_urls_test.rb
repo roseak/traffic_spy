@@ -1,7 +1,6 @@
 require './test/test_helper'
-require './app/controllers/payload'
 
-class UrlTest < FeatureTest
+class UrlCanSortTest < FeatureTest
   include Rack::Test::Methods
   attr_reader :payload1, :payload2, :payload3, :payload4, :payload5, :payload6
 
@@ -103,6 +102,7 @@ class UrlTest < FeatureTest
   end
 
   def test_can_get_list_of_urls_from_most_to_least_requested
+    skip
     post('/sources/r3m/data', payload1)
     post('/sources/r3m/data', payload2)
     post('/sources/r3m/data', payload3)

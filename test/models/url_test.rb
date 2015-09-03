@@ -1,5 +1,4 @@
 require './test/test_helper'
-require './app/controllers/payload'
 
 class UrlTest < Minitest::Test
   include Rack::Test::Methods
@@ -116,6 +115,7 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_find_all_urls_for_identifier
+    skip
     setup
     post('/sources/r3m/data', payload1)
     post('/sources/r3m/data', payload2)
@@ -127,8 +127,6 @@ class UrlTest < Minitest::Test
 
 
     identifier = 'r3m'
-    require "pry"
-    binding.pry
     assert_equal 7, TrafficSpy::Visit.size
 
     result = TrafficSpy::Url.urls_for_a_client(identifier)
