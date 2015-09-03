@@ -17,26 +17,24 @@ module TrafficSpy
     get '/sources/:identifier/urls' do |identifier|
       @params = {
         identifier: identifier,
+        path: identifier,
         title: "URLs",
         header: "URL",
         comparison: "Requests",
         data: {
-          "#{identifier}/blog" => 10,
-          "#{identifier}/something" => 10,
-          "#{identifier}/blog" => 9,
-          "#{identifier}/abas" => 8,
-          "#{identifier}/lkjsdf" => 7,
-          "#{identifier}/lkja" => 5,
-          "#{identifier}/lkj" => 4,
+          "blog" => 10,
+          "articles/1" => 10,
+          "pizza" => 9,
         }
       }
 
-      erb :list
+      erb :urls
     end
 
     get '/sources/:identifier/browsers' do |identifier|
       @params = {
         identifier: identifier,
+        path: identifier,
         title: "Web Browsers",
         header: "Browser",
         comparison: "Requests",
@@ -53,6 +51,7 @@ module TrafficSpy
     get '/sources/:identifier/os' do |identifier|
       @params = {
         identifier: identifier,
+        path: identifier,
         title: "Operating Systems",
         header: "OS",
         comparison: "Requests",
@@ -70,6 +69,7 @@ module TrafficSpy
     get '/sources/:identifier/resolution' do |identifier|
       @params = {
         identifier: identifier,
+        path: identifier,
         title: "Screen Resolution",
         header: "Resolution",
         comparison: "Requests",
@@ -87,6 +87,7 @@ module TrafficSpy
     get '/sources/:identifier/responsetime' do |identifier|
       @params = {
         identifier: identifier,
+        path: identifier,
         title: "Screen Resolution",
         header: "URL",
         comparison: "Average Response Time",
@@ -102,7 +103,8 @@ module TrafficSpy
 
     get '/sources/:identifier/urls/*' do |identifier, path|
       @params = {
-        identifier: "#{identifier}/#{path}",
+        identifier: identifier,
+        path: "#{identifier}/#{path}",
         title: "URL-Specific Data",
         data: {
           "Longest Response Time" => 10,
