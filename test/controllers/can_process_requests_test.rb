@@ -10,7 +10,9 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_200_from_good_request
-    attributes = {:identifier => 'r3m', :root_url => 'http://r3m.com'}
+    attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
+    # {"identifier"=>"apple", "rootUrl"=>"http://apple.com"}
+
     post('/sources', attributes)
 
     payload = '{
@@ -52,7 +54,7 @@ class RegisterTest < Minitest::Test
 
   def test_gets_400_for_missing_payload
 
-    attributes = {:identifier => 'r3m', :root_url => 'http://r3m.com'}
+    attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
     hash = {} 
@@ -64,7 +66,7 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_403_for_duplicate_payload
-    attributes = {:identifier => 'r3m', :root_url => 'http://r3m.com'}
+    attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
     payload = '{
@@ -91,7 +93,7 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_403_not_registered
-    attributes = {:identifier => 'r3m', :root_url => 'http://r3m.com'}
+    attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
     payload = '{
