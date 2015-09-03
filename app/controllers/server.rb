@@ -109,12 +109,18 @@ module TrafficSpy
           "Shortest Response Time" => 5,
           "Average Response Time" => 7,
           "HTTP Verbs Used" => ["GET", "POST", "PUSH"].join(", "),
-          "Most Popular Referrers" => ["www.facebook.com", "www.google.com"].join(", "),
-          "Most Popular User Agents" => ["Mozilla", "Chrome"].join(", "),
+        },
+        referrers: {
+          "www.facebook.com" => 10,
+          "www.google.com" => 6,
+        },
+        user_agents: {
+          "Mozilla/4.0 (compatible; MSIE 7.0; AOL 9.1; AOLBuild 4334.5000; Windows NT 5.1; Media Center PC 3.0; .NET CLR 1.0.3705; .NET CLR 1.1.4322; InfoPath.1)" => 2,
+          "Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0" => 1,
         }
       }
 
-      erb :list
+      erb :url_specific
     end
   end
 end
