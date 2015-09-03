@@ -19,6 +19,7 @@ module TrafficSpy
         identifier: identifier,
         title: "URLs",
         header: "URL",
+        comparison: "Requests",
         data: {
           "#{identifier}/blog" => 10,
           "#{identifier}/something" => 10,
@@ -38,6 +39,7 @@ module TrafficSpy
         identifier: identifier,
         title: "Web Browsers",
         header: "Browser",
+        comparison: "Requests",
         data: {
           "SAFARI" => 10,
           "CHROME" => 3,
@@ -53,6 +55,7 @@ module TrafficSpy
         identifier: identifier,
         title: "Operating Systems",
         header: "OS",
+        comparison: "Requests",
         data: {
           "OSX YOSEMITE" => 10,
           "WINDOWS XP" => 5,
@@ -69,11 +72,28 @@ module TrafficSpy
         identifier: identifier,
         title: "Screen Resolution",
         header: "Resolution",
+        comparison: "Requests",
         data: {
           "1920 × 1080" => 10,
           "640 × 480" => 5,
           "1440 × 1024" => 4,
           "100 × 100" => 3,
+        }
+      }
+
+      erb :list
+    end
+    
+    get '/sources/:identifier/responsetime' do |identifier|
+      @params = {
+        identifier: identifier,
+        title: "Screen Resolution",
+        header: "URL",
+        comparison: "Average Response Time",
+        data: {
+          "#{identifier}/blog" => 10,
+          "#{identifier}/images" => 7,
+          "#{identifier}/something" => 2,
         }
       }
 
