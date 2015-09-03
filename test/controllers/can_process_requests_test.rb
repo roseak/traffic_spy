@@ -64,7 +64,6 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_403_for_duplicate_payload
-    skip
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
