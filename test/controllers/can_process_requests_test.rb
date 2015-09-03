@@ -8,8 +8,6 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_200_from_good_request
-    skip
-
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     # {"identifier"=>"apple", "rootUrl"=>"http://apple.com"}
 
@@ -54,8 +52,6 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_400_for_missing_payload
-    skip
-
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
@@ -68,7 +64,6 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_403_for_duplicate_payload
-    skip
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
@@ -96,7 +91,6 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_403_not_registered
-    skip
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
