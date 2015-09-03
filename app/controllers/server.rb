@@ -5,6 +5,15 @@ module TrafficSpy
 
     # This is testing for views
     
+    get '/sources/:identifier' do |identifier|
+      @params = {
+        identifier: identifier,
+        title: "Statistics",
+      }
+
+      erb :stats
+    end
+
     get '/sources/:identifier/urls' do |identifier|
       @params = {
         identifier: identifier,
