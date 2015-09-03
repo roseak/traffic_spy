@@ -31,8 +31,6 @@ class RegisterTest < Minitest::Test
 
     post('/sources/r3m/data', hash)
 
-    assert_equal 200, last_response.status
-    # binding.pry
     url = TrafficSpy::Url.find(1)
     referral = TrafficSpy::Referral.find(1)
     event = TrafficSpy::Event.find(1)
@@ -41,6 +39,8 @@ class RegisterTest < Minitest::Test
     visit = TrafficSpy::Visit.find(1)
     client = TrafficSpy::Client.find(1)
 
+    assert_equal 200, last_response.status
+    
     assert_equal client, TrafficSpy::Client.find(url.client_id)
     assert_equal referral, TrafficSpy::Referral.find(visit.referral_id)
     assert_equal event, TrafficSpy::Event.find(visit.event_id)
@@ -48,6 +48,19 @@ class RegisterTest < Minitest::Test
     assert_equal request_type, TrafficSpy::RequestType.find(visit.request_type_id)
 
     #we should insert a second payload and make sure this still works
+  end
+
+  def test_gets_400_for_missing_payload
+
+    attributes = {:identifier => 'r3m', :root_url => 'http://r3m.com'}
+    post('/sources', attributes)
+
+    hash = {} 
+
+    post('/sources/r3m/data', hash)
+
+    assert_equal 400, last_response.status
+    assert_equal "Payload is empty", last_response.body
   end
 
 

@@ -21,8 +21,13 @@ module TrafficSpy
 
     post '/sources/:identifier/data' do |identifier|
       client = Client.find_by(identifier: identifier)
-      params["client_id"] = "#{client.id}"
-      payload = Payload.new(params)
+      if !params["url"]
+        status 400
+        body "Payload is empty"
+      else
+        params["client_id"] = "#{client.id}"
+        payload = Payload.new(params)
+      end
     end
 
     not_found do
