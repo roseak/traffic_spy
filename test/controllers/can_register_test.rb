@@ -26,7 +26,7 @@ class RegisterTest < Minitest::Test
 
   def test_gets_403_when_identifier_already_exists
     attributes = {'identifier' => 'jumpstartlab', 'rootUrl' =>'http://jumpstartlab.com'}
-    post('/sources', attributes)
+    TrafficSpy::Client.create(identifier: 'jumpstartlab', root_url: 'http://jumpstartlab.com')
     post('/sources', attributes)
 
     assert_equal 403, last_response.status
