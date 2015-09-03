@@ -2,48 +2,25 @@ require 'digest'
 
 module TrafficSpy
   class Server < Sinatra::Base
-    get '/' do
-      erb :index
-    end
 
-    post '/sources' do
-      client = Client.new(params)
+    # This is testing for views
+    
+    get '/sources/:identifier/urls' do |identifier|
+      @params = {
+        identifier: identifier,
+        title: "URLs",
+        data: {
+          "#{identifier}/blog" => 10,
+          "#{identifier}/something" => 10,
+          "#{identifier}/blog" => 9,
+          "#{identifier}/abas" => 8,
+          "#{identifier}/lkjsdf" => 7,
+          "#{identifier}/lkja" => 5,
+          "#{identifier}/lkj" => 4,
+        }
+      }
 
-      if client.save
-        body client.attributes.select { |k, v| k == "identifier" }.to_json
-      elsif client.errors.full_messages.any? { |error| error.include?("blank") }
-        body client.errors.full_messages.first
-        status 400
-      else
-        body client.errors.full_messages.first
-        status 403
-      end
-    end
-
-    post '/sources/:identifier/data' do |identifier|
-      client = Client.find_by(identifier: identifier)
-      long_string = params.values.join
-      key = Digest::SHA1.hexdigest(long_string)
-
-      if !params["url"]
-        status 400
-        body "Payload is empty"
-      elsif !client
-        status 403
-        body "Application not registered"
-      elsif Sha.find_by(sha: key)
-        status 403
-        body "Already received request"
-      else
-        params["client_id"] = "#{client.id}"
-        payload = Payload.new(params)
-        Sha.create(sha: key)
-      end
-    end
-
-    not_found do
-      erb :error
+      erb :urls
     end
   end
-
 end

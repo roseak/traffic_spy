@@ -10,13 +10,15 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand">URLs</a>
-          <p class="navbar-text">Identifier</p>
+          <a class="navbar-brand"><%= @params[:title] %></a>
+          <p class="navbar-text"><%= @params[:identifier] %></p>
         </div>
-        <div class="nav navbar-nav navbar-right">
-          <p class="navbar-text"><a href="/" class="navbar-link">
-            <i class="glyphicon glyphicon-home"></i>
-          </a></p>
+        <div class="navbar-collapse collapse">
+          <div class="nav navbar-nav navbar-right">
+            <p class="navbar-text"><a href="/" class="navbar-link">
+              <i class="glyphicon glyphicon-home"></i>
+            </a></p>
+          </div>
         </div>
       </div>
     </nav>
