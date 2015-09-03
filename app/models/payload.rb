@@ -15,6 +15,15 @@ module TrafficSpy
       visit = Visit.create(visit_params(foreign_tables))
     end
 
+    def self.payload_legit?(params)
+      raw_payload = params.fetch('payload', nil) 
+      return false if !raw_payload
+      return false if params['payload'].nil?
+      return false if params['payload'].empty?
+      return false if !(params['payload'] =~/[\w]/)
+      true
+    end
+
     def url_params
       {
         "client_id" => params["client_id"],
