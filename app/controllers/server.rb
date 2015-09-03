@@ -99,5 +99,22 @@ module TrafficSpy
 
       erb :list
     end
+
+    get '/sources/:identifier/urls/*' do |identifier, path|
+      @params = {
+        identifier: "#{identifier}/#{path}",
+        title: "URL-Specific Data",
+        data: {
+          "Longest Response Time" => 10,
+          "Shortest Response Time" => 5,
+          "Average Response Time" => 7,
+          "HTTP Verbs Used" => ["GET", "POST", "PUSH"].join(", "),
+          "Most Popular Referrers" => ["www.facebook.com", "www.google.com"].join(", "),
+          "Most Popular User Agents" => ["Mozilla", "Chrome"].join(", "),
+        }
+      }
+
+      erb :list
+    end
   end
 end
