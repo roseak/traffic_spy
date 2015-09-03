@@ -6,13 +6,13 @@ module TrafficSpy
 
     def initialize(params)
       @params = params
-      foreign_tables = {}
-      foreign_tables[:url] = Url.create(url_params)
-      foreign_tables[:referral] = Referral.create(referral_params)
-      foreign_tables[:event] = Event.create(event_params)
-      foreign_tables[:user_env] = UserEnv.create(user_env_params)
-      foreign_tables[:request_type] = RequestType.create(request_type_params)
-      visit = Visit.create(visit_params(foreign_tables))
+      related_objects = {}
+      related_objects[:url] = create_url(url_params)
+      related_objects[:referral] = Referral.create(referral_params)
+      related_objects[:event] = Event.create(event_params)
+      related_objects[:user_env] = UserEnv.create(user_env_params)
+      related_objects[:request_type] = RequestType.create(request_type_params)
+      visit = Visit.create(visit_params(related_objects))
     end
 
     def self.payload_legit?(params)
@@ -24,10 +24,15 @@ module TrafficSpy
       true
     end
 
+    def create_url(params)
+      client = Client.find(params[:client_id])
+      client.urls.find_or_create_by(url: params[:url])
+    end
+
     def url_params
       {
-        "client_id" => params["client_id"],
-        "url" => params["url"]
+        :client_id => params["client_id"],
+        :url => params["url"]
       }
     end
 
@@ -54,14 +59,14 @@ module TrafficSpy
       { "request_type" => params["requestType"] }
     end
 
-    def visit_params(foreign_tables)
+    def visit_params(related_objects)
       { "requested_at" => params["requestedAt"],
         "responded_in" => params["respondedIn"],
-        "url_id" => foreign_tables[:url].id,
-        "referral_id" => foreign_tables[:referral].id,
-        "event_id" => foreign_tables[:event].id,
-        "user_env_id" => foreign_tables[:user_env].id,
-        "request_type_id" => foreign_tables[:request_type].id
+        "url_id" => related_objects[:url].id,
+        "referral_id" => related_objects[:referral].id,
+        "event_id" => related_objects[:event].id,
+        "user_env_id" => related_objects[:user_env].id,
+        "request_type_id" => related_objects[:request_type].id
       }
     end
 
