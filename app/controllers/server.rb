@@ -31,5 +31,19 @@ module TrafficSpy
 
       erb :urls
     end
+
+    get '/sources/:identifier/browsers' do |identifier|
+      @params = {
+        identifier: identifier,
+        title: "Web Browsers",
+        data: {
+          "SAFARI" => 10,
+          "CHROME" => 3,
+          "MOZILLA" => 9,
+        }
+      }
+
+      erb :browsers
+    end
   end
 end
