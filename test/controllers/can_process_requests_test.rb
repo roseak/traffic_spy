@@ -8,8 +8,6 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_200_from_good_request
-    skip
-
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     # {"identifier"=>"apple", "rootUrl"=>"http://apple.com"}
 
