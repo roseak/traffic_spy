@@ -132,8 +132,8 @@ class UrlTest < Minitest::Test
     assert_equal 7, TrafficSpy::Visit.count
     assert_equal 4, TrafficSpy::Url.count
 
-    # result = TrafficSpy::Url.urls_for_a_client(identifier)
-    # assert_equal 3, result
+    result = TrafficSpy::Url.urls_for_a_client(identifier)
+    assert_equal 3, result.length
   end
 
   def teardown
