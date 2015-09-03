@@ -140,5 +140,43 @@ module TrafficSpy
 
       erb :events
     end
+
+    get '/sources/:identifier/events/*' do |identifier, event|
+      @params = {
+        identifier: identifier,
+        path: "#{identifier}/events/#{event}",
+        title: "Aggregate Event Data",
+        event: event,
+        total: 123,
+        data: {
+          "1:00 am" => 3,
+          "2:00 am" => 1,
+          "3:00 am" => 4,
+          "4:00 am" => 1,
+          "5:00 am" => 5,
+          "6:00 am" => 9,
+          "7:00 am" => 2,
+          "8:00 am" => 6,
+          "9:00 am" => 5,
+          "10:00 am" => 3,
+          "11:00 am" => 5,
+          "12:00 am" => 8,
+          "1:00 pm" => 9,
+          "2:00 pm" => 7,
+          "3:00 pm" => 9,
+          "4:00 pm" => 3,
+          "5:00 pm" => 2,
+          "6:00 pm" => 3,
+          "7:00 pm" => 8,
+          "8:00 pm" => 4,
+          "9:00 pm" => 6,
+          "10:00 pm" => 2,
+          "11:00 pm" => 6,
+          "12:00 pm" => 4,
+        }
+      }
+
+      erb :event
+    end
   end
 end
