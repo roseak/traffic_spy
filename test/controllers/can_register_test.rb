@@ -16,7 +16,7 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_400_from_bad_input_params
-    attributes = {:identifier => 'jumpstartlab'}
+    attributes = {'identifier' => 'jumpstartlab'}
     post('/sources', attributes)
 
     assert_equal 400, last_response.status
@@ -25,8 +25,7 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_403_when_identifier_already_exists
-    skip
-    attributes = {:identifier => 'jumpstartlab', :root_url=>'http://jumpstartlab.com'}
+    attributes = {'identifier' => 'jumpstartlab', 'rootUrl' =>'http://jumpstartlab.com'}
     post('/sources', attributes)
     post('/sources', attributes)
 
