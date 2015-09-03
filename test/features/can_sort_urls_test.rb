@@ -102,6 +102,7 @@ class UrlCanSortTest < FeatureTest
   end
 
   def test_can_get_list_of_urls_from_most_to_least_requested
+    skip
     post('/sources/r3m/data', payload1)
     post('/sources/r3m/data', payload2)
     post('/sources/r3m/data', payload3)
