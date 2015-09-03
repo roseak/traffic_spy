@@ -124,5 +124,21 @@ module TrafficSpy
 
       erb :url_specific
     end
+
+    get '/sources/:identifier/events' do |identifier|
+      @params = {
+        identifier: identifier,
+        path: "#{identifier}/events",
+        title: "Aggregate Event Data",
+        most_received_event: "SOME_EVENT",
+        events: [
+          "startedRegistration",
+          "addedSocialThroughPromptA",
+          "addedSocialThroughPromptB",
+        ]
+      }
+
+      erb :events
+    end
   end
 end
