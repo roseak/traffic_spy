@@ -13,7 +13,6 @@ module TrafficSpy
       client = Client.new(prepped)
 
       if client.save
-        # binding.pry
         body client.attributes.select { |k, v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
         body client.errors.full_messages.first
