@@ -52,8 +52,6 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_400_for_missing_payload
-    skip
-
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
