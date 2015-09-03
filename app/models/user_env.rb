@@ -1,5 +1,5 @@
 module TrafficSpy
-  class Referral < ActiveRecord::Base
+  class UserEnv < ActiveRecord::Base
 
     has_many :visits
   end

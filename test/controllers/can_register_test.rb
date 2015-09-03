@@ -29,6 +29,7 @@ class RegisterTest < Minitest::Test
 
     assert_equal 400, last_response.status
     assert_equal "Root url can't be blank", last_response.body
+    #should give different error messages for different missing params
   end
 
   def test_gets_403_when_identifier_already_exists

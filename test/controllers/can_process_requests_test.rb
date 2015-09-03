@@ -34,9 +34,22 @@ class RegisterTest < Minitest::Test
     assert_equal 200, last_response.status
     # binding.pry
     url = TrafficSpy::Url.find(1)
-    assert_equal TrafficSpy::Client.find(1), TrafficSpy::Client.find(url.client_id)
+    referral = TrafficSpy::Referral.find(1)
+    event = TrafficSpy::Event.find(1)
+    user_env = TrafficSpy::UserEnv.find(1)
+    request_type = TrafficSpy::RequestType.find(1)
+    visit = TrafficSpy::Visit.find(1)
+    client = TrafficSpy::Client.find(1)
 
+    assert_equal client, TrafficSpy::Client.find(url.client_id)
+    assert_equal referral, TrafficSpy::Referral.find(visit.referral_id)
+    assert_equal event, TrafficSpy::Event.find(visit.event_id)
+    assert_equal user_env, TrafficSpy::UserEnv.find(visit.user_env_id)
+    assert_equal request_type, TrafficSpy::RequestType.find(visit.request_type_id)
+
+    #we should insert a second payload and make sure this still works
   end
+
 
   def setup
     DatabaseCleaner.start
