@@ -1,1 +1,1 @@
-{"identifier"=>"jumpstartlab", "rootUrl"=>"http://jumpstartlab.com"}
+{"identifier"=>"jumpstartlab"}
