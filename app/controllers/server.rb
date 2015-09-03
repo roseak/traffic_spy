@@ -63,5 +63,21 @@ module TrafficSpy
 
       erb :list
     end
+
+    get '/sources/:identifier/resolution' do |identifier|
+      @params = {
+        identifier: identifier,
+        title: "Screen Resolution",
+        header: "Resolution",
+        data: {
+          "1920 × 1080" => 10,
+          "640 × 480" => 5,
+          "1440 × 1024" => 4,
+          "100 × 100" => 3,
+        }
+      }
+
+      erb :list
+    end
   end
 end
