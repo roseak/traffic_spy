@@ -7,9 +7,13 @@ module TrafficSpy
     end
 
     post '/sources' do
-      client = Client.new(params)
+      # File.open('./test/params.txt', 'w') { |file| file.write("#{params}") }
+      prepped = Client.prep(params)
+
+      client = Client.new(prepped)
 
       if client.save
+        # binding.pry
         body client.attributes.select { |k, v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
         body client.errors.full_messages.first

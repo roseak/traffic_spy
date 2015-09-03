@@ -10,7 +10,6 @@ class RegisterTest < Minitest::Test
   end
 
   def test_gets_200_from_good_request
-
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     # {"identifier"=>"apple", "rootUrl"=>"http://apple.com"}
 
@@ -33,7 +32,6 @@ class RegisterTest < Minitest::Test
     hash = JSON.parse(payload)
 
     post('/sources/r3m/data', hash)
-    # post('/sources/r3m/data', {payload: payload})
 
     url = TrafficSpy::Url.find(1)
     referral = TrafficSpy::Referral.find(1)
@@ -44,7 +42,7 @@ class RegisterTest < Minitest::Test
     client = TrafficSpy::Client.find(1)
 
     assert_equal 200, last_response.status
-
+    
     assert_equal client, TrafficSpy::Client.find(url.client_id)
     assert_equal referral, TrafficSpy::Referral.find(visit.referral_id)
     assert_equal event, TrafficSpy::Event.find(visit.event_id)
@@ -59,7 +57,7 @@ class RegisterTest < Minitest::Test
     attributes = {"identifier" => 'r3m', "rootUrl" => 'http://r3m.com'}
     post('/sources', attributes)
 
-    hash = {}
+    hash = {} 
 
     post('/sources/r3m/data', hash)
 
