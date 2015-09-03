@@ -18,6 +18,7 @@ module TrafficSpy
       @params = {
         identifier: identifier,
         title: "URLs",
+        header: "URL",
         data: {
           "#{identifier}/blog" => 10,
           "#{identifier}/something" => 10,
@@ -29,13 +30,14 @@ module TrafficSpy
         }
       }
 
-      erb :urls
+      erb :list
     end
 
     get '/sources/:identifier/browsers' do |identifier|
       @params = {
         identifier: identifier,
         title: "Web Browsers",
+        header: "Browser",
         data: {
           "SAFARI" => 10,
           "CHROME" => 3,
@@ -43,13 +45,14 @@ module TrafficSpy
         }
       }
 
-      erb :browsers
+      erb :list
     end
 
     get '/sources/:identifier/os' do |identifier|
       @params = {
         identifier: identifier,
         title: "Operating Systems",
+        header: "OS",
         data: {
           "OSX YOSEMITE" => 10,
           "WINDOWS XP" => 5,
@@ -58,7 +61,7 @@ module TrafficSpy
         }
       }
 
-      erb :os
+      erb :list
     end
   end
 end
