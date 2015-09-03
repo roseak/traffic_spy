@@ -17,7 +17,12 @@ module TrafficSpy
         body client.errors.full_messages.first
         status 403
       end
+    end
 
+    post '/sources/:identifier/data' do |identifier|
+      client = Client.find_by(identifier: identifier)
+      params["client_id"] = "#{client.id}"
+      payload = Payload.new(params)
     end
 
     not_found do
