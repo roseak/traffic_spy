@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20150903005617) do
   end
 
   create_table "request_types", force: :cascade do |t|
-    t.text "requrest_type"
+    t.text "request_type"
   end
 
   create_table "urls", force: :cascade do |t|

@@ -27,7 +27,7 @@ module TrafficSpy
     end
 
     def event_params
-      { "event_name" => params["eventName"] }
+      { "name" => params["eventName"] }
 
     end
 
