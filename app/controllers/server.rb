@@ -23,6 +23,30 @@ module TrafficSpy
       end
     end
 
+    get '/sources/:identifier' do |identifier|
+      @params = {
+        identifier: identifier,
+        title: "Statistics",
+      }
+
+      erb :stats
+    end
+
+    get '/sources/:identifier/urls' do |identifier|
+      @params = {
+        identifier: identifier,
+        path: identifier,
+        title: "URLs",
+        header: "URL",
+        comparison: "Requests",
+        data: TrafficSpy::Url.ranked_url_visits(identifier),
+      }
+
+      binding.pry
+
+      erb :urls
+    end
+
     post '/sources/:identifier/data' do |identifier|
       legit = Payload.payload_legit?(params)
 
