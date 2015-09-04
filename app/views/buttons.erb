@@ -1,0 +1,7 @@
+<h4 class="lead"><%= @data[:header] %></h4>
+
+<div class="list-group">
+<% @data[:buttons].each do |link, name| %>
+  <a type="button" class="list-group-item" href="<%= link %>"><%= name %></a>
+<% end %>
+</div>
