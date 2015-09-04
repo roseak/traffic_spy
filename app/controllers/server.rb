@@ -7,12 +7,10 @@ module TrafficSpy
     end
 
     post '/sources' do
-      # File.open('./test/params.txt', 'w') { |file| file.write("#{params}") }
       prepped = Client.prep(params)
       client = Client.new(prepped)
       
       if client.save
-
         body client.attributes.select { |k, v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
         body client.errors.full_messages.first
@@ -39,7 +37,7 @@ module TrafficSpy
         title: "URLs",
         url_title: "URL",
         count_title: "Requests",
-        data: TrafficSpy::Url.ranked_real_url_visits(identifier),
+        data: Url.rank_url_string_visits(identifier)
       }
 
       erb :list
