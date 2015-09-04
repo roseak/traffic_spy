@@ -11,6 +11,7 @@ module TrafficSpy
       related_objects[:request_type] = create_request_type(request_type_params)
           related_objects[:referral] = create_referral(referral_params)
              related_objects[:event] = create_event(event_params)
+      related_objects[:resolution] = create_resolution(screen_res_params)
           related_objects[:user_env] = UserEnv.create(user_env_params)
                             visit = Visit.create(visit_params(related_objects))
     end
@@ -58,6 +59,15 @@ module TrafficSpy
       { "name" => params["eventName"] }
     end
 
+    def create_resolution(params)
+      ScreenResolution.find_or_create_by(params)
+    end
+
+    def screen_res_params
+      res = "#{params["resolutionWidth"]}x#{params["resolutionHeight"]}"
+      { :resolution => res }
+    end
+
     def user_env_params
       {
         "user_agent" => params["userAgent"], 
@@ -73,6 +83,7 @@ module TrafficSpy
         "url_id" => related_objects[:url].id,
         "referral_id" => related_objects[:referral].id,
         "event_id" => related_objects[:event].id,
+        "resolution_id" => related_objects[:resolution].id,
         "user_env_id" => related_objects[:user_env].id,
         "request_type_id" => related_objects[:request_type].id
       }
@@ -80,18 +91,3 @@ module TrafficSpy
 
   end
 end
-
-
-# {"url"=>"http://r3m.com/blog",
-#  "requestedAt"=>"2013-02-16 21:38:28 -0700",
-#  "respondedIn"=>"37",
-#  "referredBy"=>"http://r3m.com",
-#  "requestType"=>"GET",
-#  "userAgent"=>
-#   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-#  "resolutionWidth"=>"1920",
-#  "resolutionHeight"=>"1280",
-#  "ip"=>"63.29.38.211",
-#  "splat"=>[],
-#  "captures"=>["r3m"],
-#  "identifier"=>"r3m"}
