@@ -37,12 +37,12 @@ module TrafficSpy
         identifier: identifier,
         path: identifier,
         title: "URLs",
-        header: "URL",
-        comparison: "Requests",
+        url_title: "URL",
+        count_title: "Requests",
         data: TrafficSpy::Url.ranked_real_url_visits(identifier),
       }
 
-      erb :urls
+      erb :list
     end
 
     post '/sources/:identifier/data' do |identifier|
