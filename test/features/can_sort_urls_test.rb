@@ -129,11 +129,11 @@ class UrlCanSortTest < FeatureTest
     assert_equal "/sources/r3m/urls", current_path
 
     assert page.has_content?("http://r3m.com/blog")
-    #assert page.has_content?("3")
-    #assert page.has_content?("http://r3m.com/pizza")
-    #assert page.has_content?("2")
-    #assert page.has_content?("http://r3m.com/jonothy")
-    #assert page.has_content?("1")
+    assert page.has_content?("3")
+    assert page.has_content?("http://r3m.com/pizza")
+    assert page.has_content?("2")
+    assert page.has_content?("http://r3m.com/jonothy")
+    assert page.has_content?("1")
   end
 
   def teardown
