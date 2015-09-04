@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'sinatra', require: 'sinatra/base'
 gem 'pg'
 gem 'activerecord'
+gem 'useragent'
 gem 'sinatra-activerecord'
 
 group :development, :test do

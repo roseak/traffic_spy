@@ -12,6 +12,7 @@ module TrafficSpy
           related_objects[:referral] = create_referral(referral_params)
              related_objects[:event] = create_event(event_params)
       related_objects[:resolution] = create_resolution(screen_res_params)
+      related_objects[:browser] = create_browser(browser_params)
           related_objects[:user_env] = UserEnv.create(user_env_params)
                             visit = Visit.create(visit_params(related_objects))
     end
@@ -68,6 +69,14 @@ module TrafficSpy
       { :resolution => res }
     end
 
+    def create_browser(params)
+      WebBrowser.find_or_create_by(params)
+    end
+
+    def browser_params
+      { :browser => UserAgent.parse(params["userAgent"]).browser }
+    end
+
     def user_env_params
       {
         "user_agent" => params["userAgent"], 
@@ -85,7 +94,8 @@ module TrafficSpy
         "event_id" => related_objects[:event].id,
         "resolution_id" => related_objects[:resolution].id,
         "user_env_id" => related_objects[:user_env].id,
-        "request_type_id" => related_objects[:request_type].id
+        "request_type_id" => related_objects[:request_type].id,
+        "web_browser_id" => related_objects[:browser].id
       }
     end
 
