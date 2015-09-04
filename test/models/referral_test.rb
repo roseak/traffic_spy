@@ -1,6 +1,6 @@
 require './test/test_helper'
 
-class RequestTypeTest < Minitest::Test
+class ReferralTest < Minitest::Test
   include Rack::Test::Methods 
 
   def app
@@ -20,7 +20,7 @@ class RequestTypeTest < Minitest::Test
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-02-16 21:38:22 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://google.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -34,7 +34,7 @@ class RequestTypeTest < Minitest::Test
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-01-16 21:38:23 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://google.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -48,7 +48,7 @@ class RequestTypeTest < Minitest::Test
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-04-16 21:38:24 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://google.com",
       "requestType":"DELETE",
       "parameters":[],
       "eventName": "socialLogin",
@@ -62,7 +62,7 @@ class RequestTypeTest < Minitest::Test
       "url":"http://r3m.com/pizza",
       "requestedAt":"2013-02-16 21:38:25 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://webcrawler.com",
       "requestType":"PUSH",
       "parameters":[],
       "eventName": "socialLogin",
@@ -76,7 +76,7 @@ class RequestTypeTest < Minitest::Test
       "url":"http://r3m.com/jonothy",
       "requestedAt":"2013-02-16 21:38:26 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://yahoo.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -90,7 +90,7 @@ class RequestTypeTest < Minitest::Test
       "url":"http://r3m.com/pizza",
       "requestedAt":"2013-07-16 21:38:27 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://webcrawler.com",
       "requestType":"POST",
       "parameters":[],
       "eventName": "socialLogin",
@@ -108,12 +108,11 @@ class RequestTypeTest < Minitest::Test
     post('/sources/r3m/data', {'payload' => payload6})
   end
 
-  def test_it_does_not_store_duplicate_request_types
-    expected_request_types = ["GET", "POST", "PUSH", "DELETE"]
-    actual = TrafficSpy::RequestType.all
+  def test_it_does_not_store_duplicate_referrals
+    expected_refferals = ["http://google.com", "http://webcrawler.com", "http://yahoo.com"]
+    actual = TrafficSpy::Referral.all
 
-    # binding.pry
-    assert_equal expected_request_types.length, actual.length
+    assert_equal expected_refferals.length, actual.length
   end
 
   def teardown
