@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903023200) do
+ActiveRecord::Schema.define(version: 20150904051605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,10 @@ ActiveRecord::Schema.define(version: 20150903023200) do
 
   create_table "request_types", force: :cascade do |t|
     t.text "request_type"
+  end
+
+  create_table "screen_resolutions", force: :cascade do |t|
+    t.text "resolution"
   end
 
   create_table "shas", force: :cascade do |t|
@@ -61,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150903023200) do
     t.integer "event_id"
     t.integer "user_env_id"
     t.integer "request_type_id"
+    t.integer "resolution_id"
   end
 
 end
