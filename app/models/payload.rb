@@ -35,6 +35,7 @@ module TrafficSpy
     end
 
     def create_request_type(params)
+      # binding.pry
       RequestType.find_or_create_by(request_type_params)
     end
 
