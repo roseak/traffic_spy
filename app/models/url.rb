@@ -7,9 +7,15 @@ module TrafficSpy
       Client.find_by(identifier: identifier).urls
     end
 
-    # def self.url_visits(client_identifier)
-    #   urls_for_a_client(client_identifier)
-    # end
+    def self.url_visits(client_identifier)
+      urls_for_a_client(client_identifier).map do |url|
+        [url, url.visits.count]
+      end.to_h
+    end
+
+    def self.ranked_url_visits(client_identifier)
+      url_visits.sort_by { |url, visits| visits }
+    end
 
 
   end
