@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= @params[:url_title] %></th>
+      <th><%= @params[:count_title] %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @params[:data].each do |url, count| %>
+      <tr>
+        <td><a href="urls/<%= url %>"><%= url %></td>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
