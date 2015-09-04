@@ -10,7 +10,7 @@ module TrafficSpy
                related_objects[:url] = create_url(url_params)
       related_objects[:request_type] = create_request_type(request_type_params)
           related_objects[:referral] = create_referral(referral_params)
-             related_objects[:event] = Event.create(event_params)
+             related_objects[:event] = create_event(event_params)
           related_objects[:user_env] = UserEnv.create(user_env_params)
                             visit = Visit.create(visit_params(related_objects))
     end
@@ -50,9 +50,12 @@ module TrafficSpy
       { "referred_by" => params["referredBy"] }
     end
 
+    def create_event(params)
+      Event.find_or_create_by(params)
+    end
+
     def event_params
       { "name" => params["eventName"] }
-
     end
 
     def user_env_params
@@ -63,8 +66,6 @@ module TrafficSpy
         "ip" => params["ip"]
       }
     end
-
-
 
     def visit_params(related_objects)
       { "requested_at" => params["requestedAt"],
