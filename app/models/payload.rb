@@ -6,13 +6,13 @@ module TrafficSpy
 
     def initialize(params)
       @params = params
-      related_objects = {}
-      related_objects[:url] = create_url(url_params)
-      related_objects[:referral] = Referral.create(referral_params)
-      related_objects[:event] = Event.create(event_params)
-      related_objects[:user_env] = UserEnv.create(user_env_params)
-      related_objects[:request_type] = RequestType.create(request_type_params)
-      visit = Visit.create(visit_params(related_objects))
+                     related_objects = {}
+               related_objects[:url] = create_url(url_params)
+      related_objects[:request_type] = create_request_type(request_type_params)
+          related_objects[:referral] = Referral.create(referral_params)
+             related_objects[:event] = Event.create(event_params)
+          related_objects[:user_env] = UserEnv.create(user_env_params)
+                            visit = Visit.create(visit_params(related_objects))
     end
 
     def self.payload_legit?(params)
@@ -30,11 +30,19 @@ module TrafficSpy
     end
 
     def url_params
-      {
-        :client_id => params["client_id"],
-        :url => params["url"]
-      }
+      { :client_id => params["client_id"],
+              :url => params["url"] }
     end
+
+    def create_request_type(params)
+      # binding.pry
+      RequestType.find_or_create_by(request_type_params)
+    end
+
+    def request_type_params
+      { :request_type => params["requestType"] }
+    end
+    
 
     def referral_params
       { "referred_by" => params["referredBy"] }
@@ -55,9 +63,6 @@ module TrafficSpy
     end
 
 
-    def request_type_params
-      { "request_type" => params["requestType"] }
-    end
 
     def visit_params(related_objects)
       { "requested_at" => params["requestedAt"],

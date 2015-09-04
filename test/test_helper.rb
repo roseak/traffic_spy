@@ -8,6 +8,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'capybara'
 require 'database_cleaner'
+require 'tilt/erb'
 
 Capybara.app = TrafficSpy::Server
 
