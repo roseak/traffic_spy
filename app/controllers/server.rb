@@ -39,10 +39,8 @@ module TrafficSpy
         title: "URLs",
         header: "URL",
         comparison: "Requests",
-        data: TrafficSpy::Url.ranked_url_visits(identifier),
+        data: TrafficSpy::Url.ranked_url_visits(identifier).map { |k, v| [k.url, v] }.to_h,
       }
-
-      binding.pry
 
       erb :urls
     end
