@@ -115,13 +115,13 @@ class UrlTest < Minitest::Test
       "ip":"63.29.38.211"
     }'
 
-    post('/sources/r3m/data', {'payload' => payload1})
     post('/sources/r3m/data', {'payload' => payload2})
-    post('/sources/r3m/data', {'payload' => payload3})
-    post('/sources/r3m/data', {'payload' => payload4})
     post('/sources/r3m/data', {'payload' => payload5})
-    post('/sources/r3m/data', {'payload' => payload6})
+    post('/sources/r3m/data', {'payload' => payload3})
+    post('/sources/r3m/data', {'payload' => payload1})
     post('/sources/123/data', {'payload' => payload7})
+    post('/sources/r3m/data', {'payload' => payload4})
+    post('/sources/r3m/data', {'payload' => payload6})
   end
 
   def test_can_find_all_urls_for_identifier
@@ -133,12 +133,32 @@ class UrlTest < Minitest::Test
 
   def test_it_determines_visits_for_urls
     identifier = 'r3m'
-
     
-    expected_order = ['blog', 'pizza', 'jonothy']
+    expected_urls = ['http://r3m.com/blog', 'http://r3m.com/pizza', 'http://r3m.com/jonothy']
     expected_visits = [3, 2, 1]
+    expected = expected_urls.zip(expected_visits).to_h
 
-    # result = TrafficSpy::Url.url_visits(identifier)
+    actual_as_objects = TrafficSpy::Url.url_visits(identifier)
+    actual_for_comparison = actual_as_objects.map do |k, v|
+      [k.url, v]
+    end.to_h.sort_by {|url, visits| -visits }.to_h
+
+    assert_equal expected, actual_for_comparison
+  end
+
+  def test_it_ranks_visits_for_urls
+    identifier = 'r3m'
+    
+    expected_order = ['http://r3m.com/blog', 'http://r3m.com/pizza', 'http://r3m.com/jonothy']
+    expected_visits = [3, 2, 1]
+    expected = expected_order.zip(expected_visits).to_h
+
+    actual_as_objects = TrafficSpy::Url.url_visits(identifier)
+    actual_for_comparison = actual_as_objects.map do |k, v|
+      [k.url, v]
+    end.to_h
+
+    assert_equal expected, actual_for_comparison
   end
 
   def teardown
