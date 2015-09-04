@@ -25,7 +25,6 @@ module TrafficSpy
     end
 
     def create_url(params)
-      binding.pry
       client = Client.find(params[:client_id])
       client.urls.find_or_create_by(url: params[:url])
     end

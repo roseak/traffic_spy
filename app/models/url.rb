@@ -2,6 +2,7 @@ module TrafficSpy
   class Url < ActiveRecord::Base
     belongs_to :client
     has_many :visits
+    has_many :events, through: :visits
 
     def self.urls_for_a_client(identifier)
       Client.find_by(identifier: identifier).urls

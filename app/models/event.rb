@@ -3,7 +3,12 @@ module TrafficSpy
     has_many :visits
 
     def self.events_for_a_client(identifier)
-      Client.find_by(identifier: identifier).urls.visits.events
+      urls = Client.find_by(identifier: identifier).urls
+      events = urls.map { |url| url.events }.flatten
+      count = events.reduce(Hash.new(0)) do |hash, event|
+        hash[event.name] += 1
+        hash
+      end
     end
 
   end
