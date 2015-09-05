@@ -1,8 +1,7 @@
 require './test/test_helper'
 
 class UrlTest < Minitest::Test
-  include Rack::Test::Methods 
-  # attr_reader :payload1, :payload2, :payload3, :payload4, :payload5, :payload6, :payload7
+  include Rack::Test::Methods
 
   def app
     TrafficSpy::Server
@@ -133,7 +132,7 @@ class UrlTest < Minitest::Test
 
   def test_it_determines_visits_for_urls
     identifier = 'r3m'
-    
+
     expected_urls = ['http://r3m.com/blog', 'http://r3m.com/pizza', 'http://r3m.com/jonothy']
     expected_visits = [3, 2, 1]
     expected = expected_urls.zip(expected_visits).to_h
@@ -148,17 +147,15 @@ class UrlTest < Minitest::Test
 
   def test_it_ranks_visits_for_urls
     identifier = 'r3m'
-    
+
     expected_order = ['http://r3m.com/blog', 'http://r3m.com/pizza', 'http://r3m.com/jonothy']
     expected_visits = [3, 2, 1]
     expected = expected_order.zip(expected_visits).to_h
 
-    actual_as_objects = TrafficSpy::Url.url_visits(identifier)
-    actual_for_comparison = actual_as_objects.map do |k, v|
-      [k.url, v]
-    end.to_h
+    actual = TrafficSpy::Url.ranked_url_string_visits(identifier)
 
-    assert_equal expected, actual_for_comparison
+
+    assert_equal expected, actual
   end
 
   def teardown

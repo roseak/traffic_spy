@@ -9,7 +9,7 @@ module TrafficSpy
     post '/sources' do
       prepped = Client.prep(params)
       client = Client.new(prepped)
-      
+
       if client.save
         body client.attributes.select { |k, v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
@@ -38,7 +38,7 @@ module TrafficSpy
         title: "URLs",
         url_title: "URL",
         count_title: "Requests",
-        data: Url.rank_url_string_visits(identifier)
+        data: Url.ranked_url_string_visits(identifier)
       }
 
       erb :list
@@ -48,8 +48,8 @@ module TrafficSpy
       legit = Payload.payload_legit?(params)
 
       if legit
-        raw_payload = params.fetch('payload', nil) 
-        parsed = JSON.parse(raw_payload)       
+        raw_payload = params.fetch('payload', nil)
+        parsed = JSON.parse(raw_payload)
         client = Client.find_by(identifier: identifier)
         long_string = parsed.values.join
         key = Digest::SHA1.hexdigest(long_string)
