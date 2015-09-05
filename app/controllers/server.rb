@@ -25,6 +25,7 @@ module TrafficSpy
       @params = {
         identifier: identifier,
         title: "Statistics",
+        path: identifier,
       }
 
       erb :stats

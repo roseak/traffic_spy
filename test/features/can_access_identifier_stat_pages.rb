@@ -9,6 +9,8 @@ class CanAccessIdentifierStatPages < FeatureTest
 
   def setup
     DatabaseCleaner.start
+
+    visit('/sources/hello')
   end
 
   def teardown
@@ -16,9 +18,8 @@ class CanAccessIdentifierStatPages < FeatureTest
   end
 
   def test_the_page_has_stuff
-    visit('/sources/hello')
-
     assert page.has_content?("Statistics")
+    assert page.has_content?("hello")
     within(:css, ".list-group") {
       assert page.has_content?("URLs")
       assert page.has_content?("Browsers")
