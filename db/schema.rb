@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20150905170835) do
     t.text "request_type"
   end
 
-  create_table "screen_resolutions", force: :cascade do |t|
+  create_table "resolutions", force: :cascade do |t|
     t.text "resolution"
   end
 
