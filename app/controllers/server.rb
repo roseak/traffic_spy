@@ -81,7 +81,7 @@ module TrafficSpy
         data: Url.responded_in(identifier, url),
         referrers: Url.referrers(identifier, url),
         browsers: Url.browsers(identifier, url),
-        operating_systems: {},
+        operating_systems: Url.operating_systems(identifier, url),
       }
 
       erb :url_specific

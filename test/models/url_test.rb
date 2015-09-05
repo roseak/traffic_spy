@@ -211,6 +211,18 @@ class UrlTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_can_get_operating_systems
+    identifier = 'r3m'
+    path = 'blog'
+    actual = TrafficSpy::Url.operating_systems(identifier, path)
+    expected = {
+      "Windows 7" => 2,
+      "Linux i586" => 1,
+      "OS X 10.10.1" => 1,
+    }
+    assert_equal expected, actual
+  end
+
   def teardown
     DatabaseCleaner.clean
   end
