@@ -15,6 +15,12 @@ Capybara.app = TrafficSpy::Server
 class FeatureTest < Minitest::Test
   include Capybara::DSL
 
+  include Rack::Test::Methods
+
+  def app
+    TrafficSpy::Server
+  end
+
   def setup
     DatabaseCleaner.start
 
@@ -131,6 +137,10 @@ class FeatureTest < Minitest::Test
     post('/sources/123/data', {'payload' => payload7})
 
     visit ('/sources/r3m')
+  end
+
+  def teardown
+    DatabaseCleaner.clean
   end
 end
 
