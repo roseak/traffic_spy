@@ -58,6 +58,5 @@ class CanAccessUrlSpecificData < FeatureTest
     assert_equal "/sources/r3m/urls/blog", current_path
 
     assert page.has_content?("GET")
-    save_and_open_page
   end
 end
