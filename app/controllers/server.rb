@@ -30,9 +30,7 @@ module TrafficSpy
         }
         erb :stats
       else
-        @params = {
-          message: "Identifer Does Not Exist"
-        }
+        @params = { message: "Identifer Does Not Exist" }
         erb :error
       end
 
