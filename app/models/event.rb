@@ -24,13 +24,8 @@ module TrafficSpy
       end.reverse.to_h
     end
 
-    def self.sorted(identifier)
-      urls = Client.find_by(identifier: identifier).urls
-      events = urls.map(&:events).flatten.map(&:name)
-      events.inject(Hash.new(0)) { |sum, event|
-        sum[event] += 1
-        sum
-      }
+    def self.max(identifier)
+      ranked_events_for_a_client(identifier).first.first
     end
   end
 end

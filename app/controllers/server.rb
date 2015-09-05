@@ -49,6 +49,18 @@ module TrafficSpy
       erb :list
     end
 
+    get '/sources/:identifier/events' do |identifier|
+      @params = {
+        identifier: identifier,
+        path: identifier,
+        title: "Aggregate Event Data",
+        most_received_event: Event.max(identifier),
+        events: Event.events_for_a_client(identifier).map(&:name).uniq,
+      }
+
+      erb :events
+    end
+
     get '/sources/:identifier/os' do |identifier|
       @params = {
         identifier: identifier,
