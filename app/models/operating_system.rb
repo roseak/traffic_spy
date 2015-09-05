@@ -1,5 +1,5 @@
 module TrafficSpy
-  class Os < ActiveRecord::Base
+  class OperatingSystem < ActiveRecord::Base
     has_many :visits
   end
 end
