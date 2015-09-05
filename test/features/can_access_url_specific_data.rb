@@ -51,7 +51,7 @@ class CanAccessUrlSpecificData < FeatureTest
     assert page.has_content?("3")
   end
 
-  def test_can_access_url_specific_operating_systems_by_popularity
+  def test_can_access_url_specific_request_types
     click_link "URLs"
     assert_equal "/sources/r3m/urls", current_path
     click_link "blog"
