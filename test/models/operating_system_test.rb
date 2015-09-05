@@ -1,7 +1,7 @@
 require './test/test_helper'
 
 class OperatingSystemTest < Minitest::Test
-  include Rack::Test::Methods 
+  include Rack::Test::Methods
 
   def app
     TrafficSpy::Server
@@ -109,12 +109,10 @@ class OperatingSystemTest < Minitest::Test
   end
 
   def test_it_does_not_store_duplicate_web_browsers
-    skip
-    # binding.pry
     actual_operating_systems = TrafficSpy::OperatingSystem.all.sort
-    
+
     actual = actual_operating_systems.map { |o| o.operating_system }
-    expected = ["Macintosh"]
+    expected = ["Windows 7", "OS X 10.8.2", "OS X 10.10.1"]
 
     assert_equal expected, actual
   end
