@@ -24,5 +24,8 @@ module TrafficSpy
       end.reverse.to_h
     end
 
+    def self.max(identifier)
+      ranked_events_for_a_client(identifier).first.first
+    end
   end
 end

@@ -76,6 +76,13 @@ module TrafficSpy
       assert_equal expected, result
     end
 
+    def test_it_can_find_the_most_requested_event_for_a_client
+      expected = "boo"
+      actual = Event.max('r3m')
+
+      assert_equal expected, actual
+    end
+
     def app
       TrafficSpy::Server
     end

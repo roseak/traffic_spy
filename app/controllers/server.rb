@@ -49,6 +49,18 @@ module TrafficSpy
       erb :list
     end
 
+    get '/sources/:identifier/events' do |identifier|
+      @params = {
+        identifier: identifier,
+        path: identifier,
+        title: "Aggregate Event Data",
+        most_received_event: Event.max(identifier),
+        events: Event.events_for_a_client(identifier).map(&:name).uniq,
+      }
+
+      erb :events
+    end
+
     get '/sources/:identifier/os' do |identifier|
       @params = {
         identifier: identifier,
@@ -89,18 +101,23 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/urls/*' do |identifier, url|
-      @params = {
-        identifier: identifier,
-        path: "#{identifier}/#{url}",
-        title: "URL Specific Data",
-        data: Url.responded_in(identifier, url),
-        referrers: Url.referrers(identifier, url),
-        browsers: Url.browsers(identifier, url),
-        operating_systems: Url.operating_systems(identifier, url),
-        http_verbs: Url.request_types(identifier, url),
-      }
 
-      erb :url_specific
+      if Url.has_been_requested?(identifier, url)
+        @params = {
+          identifier: identifier,
+          path: "#{identifier}/#{url}",
+          title: "URL Specific Data",
+          data: Url.responded_in(identifier, url),
+          referrers: Url.referrers(identifier, url),
+          browsers: Url.browsers(identifier, url),
+          operating_systems: Url.operating_systems(identifier, url),
+          http_verbs: Url.request_types(identifier, url),
+        }
+        erb :url_specific
+      else
+        @params = { message: "Url has not been requested" }
+        erb :error
+      end
     end
 
     post '/sources/:identifier/data' do |identifier|
