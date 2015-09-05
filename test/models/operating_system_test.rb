@@ -18,86 +18,86 @@ class OperatingSystemTest < Minitest::Test
 
     payload1 = '{
       "url":"http://r3m.com/blog",
-      "requestedAt":"2013-02-16 21:38:22 -0700",
+      "requestedAt":"2013-02-16 21:38:28 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://www.google.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-      "resolutionWidth":"800",
-      "resolutionHeight":"600",
+      "userAgent":"Mozilla/5.0 (compatible; MSIE 9.0; AOL 9.7; AOLBuild 4343.19; Windows NT 6.1; WOW64; Trident/5.0; FunWebProducts)",
+      "resolutionWidth":"1920",
+      "resolutionHeight":"1280",
       "ip":"63.29.38.211"
     }'
 
     payload2 = '{
       "url":"http://r3m.com/blog",
-      "requestedAt":"2013-01-16 21:38:23 -0700",
+      "requestedAt":"2013-01-16 21:38:28 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://www.google.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
-      "resolutionWidth":"1920",
-      "resolutionHeight":"1280",
-      "ip":"63.29.38.212"
+      "userAgent":"Mozilla/5.0 (compatible; MSIE 9.0; AOL 9.7; AOLBuild 4343.19; Windows NT 6.1; WOW64; Trident/5.0; FunWebProducts)",
+      "resolutionWidth":"800",
+      "resolutionHeight":"600",
+      "ip":"63.29.38.211"
     }'
 
     payload3 = '{
       "url":"http://r3m.com/blog",
-      "requestedAt":"2013-04-16 21:38:24 -0700",
+      "requestedAt":"2013-04-16 21:38:28 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
-      "requestType":"DELETE",
+      "referredBy":"http://www.bing.com",
+      "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36",
-      "resolutionWidth":"1920",
-      "resolutionHeight":"1280",
-      "ip":"63.29.38.213"
+      "userAgent":"Mozilla/5.0 (compatible; MSIE 9.0; AOL 9.7; AOLBuild 4343.19; Windows NT 6.1; WOW64; Trident/5.0; FunWebProducts)",
+      "resolutionWidth":"1366",
+      "resolutionHeight":"768",
+      "ip":"63.29.38.211"
     }'
 
     payload4 = '{
       "url":"http://r3m.com/pizza",
-      "requestedAt":"2013-02-16 21:38:25 -0700",
+      "requestedAt":"2013-02-16 21:38:28 -0700",
       "respondedIn":37,
       "referredBy":"http://r3m.com",
-      "requestType":"PUSH",
+      "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Windows NT 6.1) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (Windows NT 6.3; rv:36.0)",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
-      "ip":"63.29.38.214"
+      "ip":"63.29.38.211"
     }'
 
     payload5 = '{
       "url":"http://r3m.com/jonothy",
-      "requestedAt":"2013-02-16 21:38:26 -0700",
+      "requestedAt":"2013-02-16 21:38:28 -0700",
+      "respondedIn":37,
+      "referredBy":"http://r3m.com",
+      "requestType":"GET",
+      "parameters":[],
+      "eventName": "socialLogin",
+      "userAgent":"Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0",
+      "resolutionWidth":"1366",
+      "resolutionHeight":"768",
+      "ip":"63.29.38.211"
+    }'
+
+    payload6 = '{
+      "url":"http://r3m.com/pizza",
+      "requestedAt":"2013-07-16 21:38:28 -0700",
       "respondedIn":37,
       "referredBy":"http://r3m.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
       "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-      "resolutionWidth":"2500",
-      "resolutionHeight":"1800",
-      "ip":"63.29.38.215"
-    }'
-
-    payload6 = '{
-      "url":"http://r3m.com/pizza",
-      "requestedAt":"2013-07-16 21:38:27 -0700",
-      "respondedIn":37,
-      "referredBy":"http://r3m.com",
-      "requestType":"POST",
-      "parameters":[],
-      "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
-      "ip":"63.29.38.216"
+      "ip":"63.29.38.211"
     }'
 
     post('/sources/r3m/data', {'payload' => payload2})
@@ -112,14 +112,14 @@ class OperatingSystemTest < Minitest::Test
     actual_operating_systems = TrafficSpy::OperatingSystem.all.sort
 
     actual = actual_operating_systems.map { |o| o.operating_system }
-    expected = ["Windows 7", "OS X 10.8.2", "OS X 10.10.1"]
+    expected = ["Windows 7", "Windows 8.1", "OS X 10.8.2"]
 
     assert_equal expected, actual
   end
 
   def test_it_ranks_visits_for_operating_systems
     identifier = 'r3m'
-    expected_order = ["OS X 10.8.2", "Windows 7", "OS X 10.10.1"]
+    expected_order = ["Windows 7", "Windows 8.1", "OS X 10.8.2"]
     expected_visits = [3, 2, 1]
     expected = expected_order.zip(expected_visits).to_h
 
