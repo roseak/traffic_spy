@@ -108,11 +108,22 @@ class OperatingSystemTest < Minitest::Test
     post('/sources/r3m/data', {'payload' => payload6})
   end
 
-  def test_it_does_not_store_duplicate_web_browsers
+  def test_it_does_not_store_duplicate_operating_systems
     actual_operating_systems = TrafficSpy::OperatingSystem.all.sort
 
     actual = actual_operating_systems.map { |o| o.operating_system }
     expected = ["Windows 7", "OS X 10.8.2", "OS X 10.10.1"]
+
+    assert_equal expected, actual
+  end
+
+  def test_it_ranks_visits_for_operating_systems
+    identifier = 'r3m'
+    expected_order = ["Windows 7", "OS X 10.8.2", "OS X 10.10.1"]
+    expected_visits = [3, 2, 1]
+    expected = expected_order.zip(expected_visits).to_h
+
+    actual = TrafficSpy::OperatingSystem.ranked_operating_system_string_visits(identifier)
 
     assert_equal expected, actual
   end

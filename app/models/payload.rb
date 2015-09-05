@@ -105,6 +105,7 @@ module TrafficSpy
         "user_env_id" => related_objects[:user_env].id,
         "request_type_id" => related_objects[:request_type].id,
         "web_browser_id" => related_objects[:browser].id
+        "operating_system_id" => related_objects[:operating_system].id
       }
     end
 
