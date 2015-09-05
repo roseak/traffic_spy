@@ -1,0 +1,48 @@
+<table class="table">
+  <tbody>
+    <% @params[:data].each do |url, count| %>
+      <tr>
+        <td><%= url %></td>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="panel panel-default">
+  <div class="panel-heading">Most Popular Referrers</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Referrer</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @params[:referrers].each do |ref, count| %>
+        <tr>
+          <td><%= ref %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">Most Popular User Environments</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Environment</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @params[:user_agents].each do |agent, count| %>
+        <tr>
+          <td><%= agent %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

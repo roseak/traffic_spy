@@ -73,6 +73,19 @@ module TrafficSpy
       erb :list
     end
 
+    get '/sources/:identifier/urls/*' do |identifier, url|
+      @params = {
+        identifier: identifier,
+        path: "#{identifier}/#{url}",
+        title: "URL Specific Data",
+        data: Url.responded_in(identifier, url),
+        referrers: Url.referrers(identifier, url),
+        user_agents: {},
+      }
+
+      erb :url_specific
+    end
+
     post '/sources/:identifier/data' do |identifier|
       legit = Payload.payload_legit?(params)
 

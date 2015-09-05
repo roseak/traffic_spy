@@ -4,6 +4,7 @@ module TrafficSpy
     has_many :visits
     has_many :events, through: :visits
     has_many :resolutions, through: :visits
+    has_many :referrals, through: :visits
 
     def self.urls_for_a_client(identifier)
       Client.find_by(identifier: identifier).urls
@@ -20,8 +21,34 @@ module TrafficSpy
     end
 
     def self.ranked_url_string_visits(client_identifier)
-      ranked_url_visits(client_identifier).map { |k, v| [k.url, v] }.to_h
+      ranked_url_visits(client_identifier).map { |k, v| [tail(k.url), v] }.to_h
     end
 
+    def self.tail(url)
+      url.gsub(/https?:\/\/[^\/]*\//, '')
+    end
+
+    def self.url_object(identifier, url)
+      root_url = Client.find_by(identifier: identifier).root_url
+      path = "#{root_url}/#{url}"
+      Url.find_by(url: path)
+    end
+
+    def self.responded_in(identifier, url)
+      times = url_object(identifier, url).visits.map(&:responded_in)
+      responded = {
+        "Shortest Response Time" => times.min,
+        "Longest Response Time" => times.max,
+        "Average Response Time" => (times.inject(0) { |sum, time| sum + time.to_i } / times.length).to_s,
+      }
+    end
+
+    def self.referrers(identifier, url)
+      referrals = url_object(identifier, url).visits.map(&:referral)
+      referrals.reduce(Hash.new(0)) { |sum, referral|
+        sum[referral.referred_by] += 1
+        sum
+      }
+    end
   end
 end
