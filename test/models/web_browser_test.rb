@@ -1,7 +1,7 @@
 require './test/test_helper'
 
 class WebBrowserTest < Minitest::Test
-  include Rack::Test::Methods 
+  include Rack::Test::Methods
 
   def app
     TrafficSpy::Server
@@ -24,7 +24,7 @@ class WebBrowserTest < Minitest::Test
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (compatible; MSIE 9.0; AOL 9.7; AOLBuild 4343.19; Windows NT 6.1; WOW64; Trident/5.0; FunWebProducts)",
       "resolutionWidth":"800",
       "resolutionHeight":"600",
       "ip":"63.29.38.211"
@@ -38,7 +38,7 @@ class WebBrowserTest < Minitest::Test
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (compatible; MSIE 9.0; AOL 9.7; AOLBuild 4343.19; Windows NT 6.1; WOW64; Trident/5.0; FunWebProducts)",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.212"
@@ -52,7 +52,7 @@ class WebBrowserTest < Minitest::Test
       "requestType":"DELETE",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (Windows NT 6.1) Chrome/24.0.1309.0 Safari/537.17",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.213"
@@ -66,7 +66,7 @@ class WebBrowserTest < Minitest::Test
       "requestType":"PUSH",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (Windows NT 6.1) Chrome/24.0.1309.0 Safari/537.17",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.214"
@@ -80,8 +80,7 @@ class WebBrowserTest < Minitest::Test
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
-      "resolutionWidth":"2500",
+      "userAgent":"Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0",
       "resolutionHeight":"1800",
       "ip":"63.29.38.215"
     }'
@@ -110,9 +109,21 @@ class WebBrowserTest < Minitest::Test
 
   def test_it_does_not_store_duplicate_web_browsers
     actual_browsers = TrafficSpy::WebBrowser.all.sort
-    
+
     actual = actual_browsers.map { |o| o.browser }
-    expected = ["Chrome"]
+    expected = ["Internet Explorer", "Firefox", "Chrome"]
+
+    assert_equal expected, actual
+  end
+
+  def test_it_ranks_web_browsers_by_visits
+    identifier = 'r3m'
+
+    expected_order = [ "Chrome", "Internet Explorer",  "Firefox"]
+    expected_visits = [3, 2, 1]
+    expected = expected_order.zip(expected_visits).to_h
+
+    actual = TrafficSpy::WebBrowser.ranked_web_browsers_with_count(identifier)
 
     assert_equal expected, actual
   end
