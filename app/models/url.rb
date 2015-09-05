@@ -26,5 +26,17 @@ module TrafficSpy
     def self.tail(url)
       url.gsub(/https?:\/\/[^\/]*\//, '')
     end
+
+    def self.responded_in(identifier, url)
+      root_url = Client.find_by(identifier: identifier).root_url
+      path = "#{root_url}/#{url}"
+      url_object = Url.find_by(url: path)
+      times = url_object.visits.map(&:responded_in)
+      responded = {
+        "Shortest Response Time" => times.min,
+        "Longest Response Time" => times.max,
+        "Average Response Time" => (times.inject(0) { |sum, time| sum + time.to_i } / times.length).to_s,
+      }
+    end
   end
 end
