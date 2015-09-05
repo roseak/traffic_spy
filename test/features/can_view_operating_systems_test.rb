@@ -7,11 +7,6 @@ class CanAccessIdentifierStatPages < FeatureTest
     TrafficSpy::Server
   end
 
-  def setup
-    DatabaseCleaner.start
-
-  end
-
   def teardown
     DatabaseCleaner.clean
   end
