@@ -3,6 +3,7 @@ module TrafficSpy
     belongs_to :client
     has_many :visits
     has_many :events, through: :visits
+    has_many :resolutions, through: :visits
 
     def self.urls_for_a_client(identifier)
       Client.find_by(identifier: identifier).urls
