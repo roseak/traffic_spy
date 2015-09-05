@@ -7,11 +7,11 @@ class CanViewOperatingSystemsTest < FeatureTest
     assert_equal '/sources/r3m/os', current_path
 
     assert page.has_content?("OS")
-    assert page.has_content?("OS X 10.8.2")
-    assert page.has_content?("3")
     assert page.has_content?("Windows 7")
+    assert page.has_content?("3")
+    assert page.has_content?("Windows 8.1")
     assert page.has_content?("2")
-    assert page.has_content?("OS X 10.10.1")
+    assert page.has_content?("OS X 10.8.2")
     assert page.has_content?("1")
   end
 end

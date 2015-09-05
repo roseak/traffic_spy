@@ -35,7 +35,7 @@ class CanAccessUrlSpecificData < FeatureTest
 
     assert page.has_content?("Browser")
     assert page.has_content?("Count")
-    assert page.has_content?("Chrome")
+    assert page.has_content?("Internet Explorer")
     assert page.has_content?("3")
   end
 
@@ -47,7 +47,7 @@ class CanAccessUrlSpecificData < FeatureTest
 
     assert page.has_content?("Operating System")
     assert page.has_content?("Count")
-    assert page.has_content?("OS X 10.8.2")
+    assert page.has_content?("Windows 7")
     assert page.has_content?("3")
   end
 
