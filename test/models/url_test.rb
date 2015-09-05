@@ -148,7 +148,7 @@ class UrlTest < Minitest::Test
   def test_it_ranks_visits_for_urls
     identifier = 'r3m'
 
-    expected_order = ['http://r3m.com/blog', 'http://r3m.com/pizza', 'http://r3m.com/jonothy']
+    expected_order = ['blog', 'pizza', 'jonothy']
     expected_visits = [3, 2, 1]
     expected = expected_order.zip(expected_visits).to_h
 
@@ -156,6 +156,11 @@ class UrlTest < Minitest::Test
 
 
     assert_equal expected, actual
+  end
+
+  def test_can_format_urls
+    tail = TrafficSpy::Url.tail("http://superhappyfuntime.com/super/happy")
+    assert_equal "super/happy", tail
   end
 
   def teardown

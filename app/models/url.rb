@@ -20,8 +20,11 @@ module TrafficSpy
     end
 
     def self.ranked_url_string_visits(client_identifier)
-      ranked_url_visits(client_identifier).map { |k, v| [k.url, v] }.to_h
+      ranked_url_visits(client_identifier).map { |k, v| [tail(k.url), v] }.to_h
     end
 
+    def self.tail(url)
+      url.gsub(/https?:\/\/[^\/]*\//, '')
+    end
   end
 end
