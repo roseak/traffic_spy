@@ -1,25 +1,9 @@
 require './test/test_helper'
 
 class CanAccessIdentifierStatPages < FeatureTest
-  include Rack::Test::Methods
-
-  def app
-    TrafficSpy::Server
-  end
-
-  def setup
-    DatabaseCleaner.start
-
-    visit('/sources/hello')
-  end
-
-  def teardown
-    DatabaseCleaner.clean
-  end
-
   def test_the_page_has_stuff
     assert page.has_content?("Statistics")
-    assert page.has_content?("hello")
+    assert page.has_content?("r3m")
     within(:css, ".list-group") {
       assert page.has_content?("URLs")
       assert page.has_content?("Browsers")

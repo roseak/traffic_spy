@@ -44,6 +44,24 @@ module TrafficSpy
       erb :list
     end
 
+    get '/sources/:identifier/os' do |identifier|
+      @params = {
+        identifier: identifier,
+        path: identifier,
+        title: "Operating Systems",
+        header: "OS",
+        comparison: "Requests",
+        data: {
+          "OSX YOSEMITE" => 10,
+          "WINDOWS XP" => 5,
+          "UBUNTU LINUX" => 4,
+          "WINDOWS 2000" => 3,
+        }
+      }
+
+      erb :list
+    end
+
     post '/sources/:identifier/data' do |identifier|
       legit = Payload.payload_legit?(params)
 
