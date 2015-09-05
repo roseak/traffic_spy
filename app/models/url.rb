@@ -5,6 +5,9 @@ module TrafficSpy
     has_many :events, through: :visits
     has_many :resolutions, through: :visits
     has_many :referrals, through: :visits
+    has_many :web_browsers, through: :visits
+    has_many :operating_systems, through: :visits
+    has_many :request_type, through: :visits
 
     def self.urls_for_a_client(identifier)
       Client.find_by(identifier: identifier).urls
@@ -49,6 +52,26 @@ module TrafficSpy
         sum[referral.referred_by] += 1
         sum
       }
+    end
+
+    def self.browsers(identifier, url)
+      browsers = url_object(identifier, url).visits.map(&:web_browser)
+      browsers.reduce(Hash.new(0)) { |sum, browser|
+        sum[browser.browser] += 1
+        sum
+      }
+    end
+
+    def self.operating_systems(identifier, url)
+      operating_systems = url_object(identifier, url).visits.map(&:operating_system)
+      operating_systems.reduce(Hash.new(0)) { |sum, operating_system|
+        sum[operating_system.operating_system] += 1
+        sum
+      }
+    end
+
+    def self.request_types(identifier, url)
+      request_types = url_object(identifier, url).visits.map(&:request_type).map(&:request_type).uniq
     end
   end
 end

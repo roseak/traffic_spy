@@ -28,21 +28,26 @@
   </table>
 </div>
 <div class="panel panel-default">
-  <div class="panel-heading">Most Popular User Environments</div>
+  <div class="panel-heading">Most Popular Browsers</div>
   <table class="table">
     <thead>
       <tr>
-        <th>Environment</th>
+        <th>Browser</th>
         <th>Count</th>
       </tr>
     </thead>
     <tbody>
-      <% @params[:user_agents].each do |agent, count| %>
+      <% @params[:browsers].each do |browser, count| %>
         <tr>
-          <td><%= agent %></td>
+          <td><%= browser %></td>
           <td><%= count %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+<ul class="list-group">
+  <% @params[:http_verbs].each do |verb| %>
+    <li class="list-group-item"><%= verb %></li>
+  <% end %>
+</li>

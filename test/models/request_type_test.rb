@@ -112,7 +112,6 @@ class RequestTypeTest < Minitest::Test
     expected_request_types = ["GET", "POST", "PUSH", "DELETE"]
     actual = TrafficSpy::RequestType.all
 
-    # binding.pry
     assert_equal expected_request_types.length, actual.length
   end
 
