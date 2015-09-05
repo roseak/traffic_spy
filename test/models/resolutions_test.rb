@@ -138,6 +138,13 @@ class ScreenResTest < Minitest::Test
     assert_equal ["1920x1280", "1920x1280", "1920x1280", "1920x1280", "2500x1800", "800x600"], actual
   end
 
+  def test_it_can_sort_all_for_client_by_requests
+    client = TrafficSpy::Client.find_by(identifier: "r3m")
+    actual = TrafficSpy::Resolution.all_for_client_sorted("r3m")
+    expected = {"1920x1280" => 4, "2500x1800" => 1, "800x600" => 1}
+    assert_equal expected, actual
+  end
+
   def teardown
     DatabaseCleaner.clean
   end
