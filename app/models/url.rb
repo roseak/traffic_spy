@@ -73,5 +73,11 @@ module TrafficSpy
     def self.request_types(identifier, url)
       request_types = url_object(identifier, url).visits.map(&:request_type).map(&:request_type).uniq
     end
+
+    def self.has_been_requested?(identifier, url_tail)
+     client = Client.find_by(identifier: identifier) 
+     url = client.root_url + '/' + url_tail 
+     client.urls.any? { |url_obj| url_obj.url == url }
+    end
   end
 end
