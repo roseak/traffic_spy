@@ -18,7 +18,7 @@ module TrafficSpy
       url_visits(client_identifier).sort_by { |url, visits| visits }.reverse.to_h
     end
 
-    def self.rank_url_string_visits(client_identifier)
+    def self.ranked_url_string_visits(client_identifier)
       ranked_url_visits(client_identifier).map { |k, v| [k.url, v] }.to_h
     end
 
