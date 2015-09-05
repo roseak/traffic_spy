@@ -27,4 +27,17 @@ class CanAccessUrlSpecificData < FeatureTest
     assert page.has_content?("2")
     assert page.has_content?("1")
   end
+
+  def test_can_access_url_specific_browsers_by_popularity
+    click_link "URLs"
+    assert_equal "/sources/r3m/urls", current_path
+    click_link "blog"
+    assert_equal "/sources/r3m/urls/blog", current_path
+
+    save_and_open_page
+    assert page.has_content?("Browser")
+    assert page.has_content?("Count")
+    assert page.has_content?("Chrome")
+    assert page.has_content?("3")
+  end
 end

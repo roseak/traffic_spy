@@ -5,6 +5,7 @@ module TrafficSpy
     has_many :events, through: :visits
     has_many :resolutions, through: :visits
     has_many :referrals, through: :visits
+    has_many :web_browsers, through: :visits
 
     def self.urls_for_a_client(identifier)
       Client.find_by(identifier: identifier).urls
@@ -47,6 +48,14 @@ module TrafficSpy
       referrals = url_object(identifier, url).visits.map(&:referral)
       referrals.reduce(Hash.new(0)) { |sum, referral|
         sum[referral.referred_by] += 1
+        sum
+      }
+    end
+
+    def self.browsers(identifier, url)
+      browsers = url_object(identifier, url).visits.map(&:web_browser)
+      browsers.reduce(Hash.new(0)) { |sum, browser|
+        sum[browser.browser] += 1
         sum
       }
     end

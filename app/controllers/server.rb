@@ -80,7 +80,8 @@ module TrafficSpy
         title: "URL Specific Data",
         data: Url.responded_in(identifier, url),
         referrers: Url.referrers(identifier, url),
-        user_agents: {},
+        browsers: Url.browsers(identifier, url),
+        operating_systems: {},
       }
 
       erb :url_specific

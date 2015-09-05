@@ -24,7 +24,7 @@ class UrlTest < Minitest::Test
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
@@ -38,7 +38,7 @@ class UrlTest < Minitest::Test
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.0 Safari/537.36",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
@@ -52,7 +52,7 @@ class UrlTest < Minitest::Test
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (X11; Linux i586; rv:31.0) Gecko/20100101 Firefox/31.0",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
@@ -122,7 +122,7 @@ class UrlTest < Minitest::Test
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
-      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "userAgent":"Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko",
       "resolutionWidth":"1920",
       "resolutionHeight":"1280",
       "ip":"63.29.38.211"
@@ -195,6 +195,18 @@ class UrlTest < Minitest::Test
       "http://www.google.com" => 2,
       "http://www.yahoo.com" => 1,
       "http://www.bing.com" => 1,
+    }
+    assert_equal expected, actual
+  end
+
+  def test_can_get_browsers
+    identifier = 'r3m'
+    path = 'blog'
+    actual = TrafficSpy::Url.browsers(identifier, path)
+    expected = {
+      "Chrome" => 2,
+      "Firefox" => 1,
+      "Internet Explorer" => 1,
     }
     assert_equal expected, actual
   end
