@@ -12,13 +12,14 @@ module TrafficSpy
           related_objects[:referral] = create_referral(referral_params)
              related_objects[:event] = create_event(event_params)
       related_objects[:resolution] = create_resolution(screen_res_params)
+      related_objects[:operating_system] = create_operating_system(operating_system_params)
       related_objects[:browser] = create_browser(browser_params)
           related_objects[:user_env] = UserEnv.create(user_env_params)
                             visit = Visit.create(visit_params(related_objects))
     end
 
     def self.payload_legit?(params)
-      raw_payload = params.fetch('payload', nil) 
+      raw_payload = params.fetch('payload', nil)
       return false if !raw_payload
       return false if params['payload'].nil?
       return false if params['payload'].empty?
@@ -43,7 +44,7 @@ module TrafficSpy
     def request_type_params
       { :request_type => params["requestType"] }
     end
-    
+
     def create_referral(params)
       Referral.find_or_create_by(params)
     end
@@ -77,9 +78,17 @@ module TrafficSpy
       { :browser => UserAgent.parse(params["userAgent"]).browser }
     end
 
+    def create_operating_system(params)
+      OperatingSystem.find_or_create_by(params)
+    end
+
+    def operating_system_params
+      { :operating_system => UserAgent.parse(params["userAgent"]).os}
+    end
+
     def user_env_params
       {
-        "user_agent" => params["userAgent"], 
+        "user_agent" => params["userAgent"],
         "resolution_width" => params["resolutionWidth"],
         "resolution_height" => params["resolutionHeight"],
         "ip" => params["ip"]
