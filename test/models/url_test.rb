@@ -20,7 +20,7 @@ class UrlTest < Minitest::Test
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-02-16 21:38:28 -0700",
       "respondedIn":37,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://www.google.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -34,7 +34,7 @@ class UrlTest < Minitest::Test
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-01-16 21:38:28 -0700",
       "respondedIn":25,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://www.google.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -48,7 +48,7 @@ class UrlTest < Minitest::Test
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-04-16 21:38:28 -0700",
       "respondedIn":40,
-      "referredBy":"http://r3m.com",
+      "referredBy":"http://www.yahoo.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -62,7 +62,7 @@ class UrlTest < Minitest::Test
       "url":"http://r3m.com/pizza",
       "requestedAt":"2013-02-16 21:38:28 -0700",
       "respondedIn":15,
-      "referredBy":"http://r3m.com",
+      "referredBy":"",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -76,7 +76,7 @@ class UrlTest < Minitest::Test
       "url":"http://r3m.com/jonothy",
       "requestedAt":"2013-02-16 21:38:28 -0700",
       "respondedIn":90,
-      "referredBy":"http://r3m.com",
+      "referredBy":"",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -90,7 +90,7 @@ class UrlTest < Minitest::Test
       "url":"http://r3m.com/pizza",
       "requestedAt":"2013-07-16 21:38:28 -0700",
       "respondedIn":20,
-      "referredBy":"http://r3m.com",
+      "referredBy":"",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -104,7 +104,7 @@ class UrlTest < Minitest::Test
       "url":"http://123.com/pizza",
       "requestedAt":"2013-07-16 21:38:28 -0700",
       "respondedIn":35,
-      "referredBy":"http://123.com",
+      "referredBy":"",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -118,7 +118,7 @@ class UrlTest < Minitest::Test
       "url":"http://r3m.com/blog",
       "requestedAt":"2013-07-16 21:38:28 -0700",
       "respondedIn":37,
-      "referredBy":"http://123.com",
+      "referredBy":"http://www.bing.com",
       "requestType":"GET",
       "parameters":[],
       "eventName": "socialLogin",
@@ -185,6 +185,18 @@ class UrlTest < Minitest::Test
     assert_equal "25", responded["Shortest Response Time"]
     assert_equal "40", responded["Longest Response Time"]
     assert_equal "34", responded["Average Response Time"]
+  end
+
+  def test_can_get_refferers
+    identifier = 'r3m'
+    path = 'blog'
+    actual = TrafficSpy::Url.referrers(identifier, path)
+    expected = {
+      "http://www.google.com" => 2,
+      "http://www.yahoo.com" => 1,
+      "http://www.bing.com" => 1,
+    }
+    assert_equal expected, actual
   end
 
   def teardown

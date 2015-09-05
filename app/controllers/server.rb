@@ -79,7 +79,7 @@ module TrafficSpy
         path: "#{identifier}/#{url}",
         title: "URL Specific Data",
         data: Url.responded_in(identifier, url),
-        referrers: {},
+        referrers: Url.referrers(identifier, url),
         user_agents: {},
       }
 
