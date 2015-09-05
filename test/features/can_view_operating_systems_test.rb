@@ -1,9 +1,17 @@
 require './test/test_helper'
 
-class CanAccessIdentifierStatPages < FeatureTest
-  def test_can_get_to_operating_system_page
-    visit('/sources/derp')
+class CanViewOperatingSystems < FeatureTest
+  def test_can_see_list_of_operating_systems
+    visit('/sources/r3m')
     click_link('Operating Systems')
-    assert_equal '/sources/derp/os', current_path
+    assert_equal '/sources/r3m/os', current_path
+
+    assert page.has_content?("Operating Systems")
+    assert page.has_content?("OS X 10.8.2")
+    assert page.has_content?("3")
+    assert page.has_content?("Windows 7")
+    assert page.has_content?("2")
+    assert page.has_content?("OS X 10.10.1")
+    assert page.has_content?("1")
   end
 end
