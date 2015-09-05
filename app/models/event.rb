@@ -3,10 +3,25 @@ module TrafficSpy
     has_many :visits
 
     def self.events_for_a_client(identifier)
-      urls = Client.find_by(identifier: identifier).urls
-      events = urls.map { |url| url.events }.flatten
-      grouped = events.group_by { |event| event.name }
-      grouped.map { |event, events| [event, events.length] }.to_h
+      Visit.visits_for_a_client(identifier).map(&:event)
+    end
+
+    def self.grouped_events(identifier)
+      events_for_a_client(identifier).group_by do |event|
+        event.name
+      end
+    end
+
+    def self.counted_grouped_events(identifier)
+      grouped_events(identifier).map  do |event, events|
+        [event, events.length]
+      end.to_h
+    end
+
+    def self.ranked_events_for_a_client(identifier)
+      counted_grouped_events(identifier).sort_by do |event, count|
+        count
+      end.reverse.to_h
     end
 
   end

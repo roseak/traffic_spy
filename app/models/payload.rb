@@ -5,6 +5,7 @@ module TrafficSpy
     attr_reader :params
 
     def initialize(params)
+      # binding.pry
       @params = params
                      related_objects = {}
                related_objects[:url] = create_url(url_params)

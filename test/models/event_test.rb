@@ -17,11 +17,17 @@ module TrafficSpy
       Client.create(Client.prep(attributes1))
       Client.create(Client.prep(attributes2))
 
+      payload6 = {"payload"=>
+       "{\"url\":\"http://jumpstartlab.com/blog\",\"requestedAt\":\"2013-01-16 21:38:28 -0700\",\"respondedIn\":37,\"referredBy\":\"http://jumpstartlab.com\",\"requestType\":\"GET\",\"parameters\":[],\"eventName\": \"differentEvent\",\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17\",\"resolutionWidth\":\"1920\",\"resolutionHeight\":\"1280\",\"ip\":\"63.29.38.211\"}",
+       "splat"=>[],
+     "captures"=>["jumpstartlab"],
+   "identifier"=>"jumpstartlab"}
+
       payload1 = {"payload"=>
        "{\"url\":\"http://jumpstartlab.com/blog\",\"requestedAt\":\"2013-01-16 21:38:28 -0700\",\"respondedIn\":37,\"referredBy\":\"http://jumpstartlab.com\",\"requestType\":\"GET\",\"parameters\":[],\"eventName\": \"socialLogin\",\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17\",\"resolutionWidth\":\"1920\",\"resolutionHeight\":\"1280\",\"ip\":\"63.29.38.211\"}",
        "splat"=>[],
      "captures"=>["jumpstartlab"],
-   "identifier"=>"jumpstartlab"}   
+   "identifier"=>"jumpstartlab"}
 
       payload2 = {"payload"=>
        "{\"url\":\"http://jumpstartlab.com/blog\",\"requestedAt\":\"2013-02-16 21:38:28 -0700\",\"respondedIn\":37,\"referredBy\":\"http://jumpstartlab.com\",\"requestType\":\"GET\",\"parameters\":[],\"eventName\": \"socialLogin\",\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17\",\"resolutionWidth\":\"1920\",\"resolutionHeight\":\"1280\",\"ip\":\"63.29.38.211\"}",
@@ -47,34 +53,27 @@ module TrafficSpy
   "captures"=>["jumpstartlab"],
   "identifier"=>"jumpstartlab"}
 
-
-      payload6 = {"payload"=>
-       "{\"url\":\"http://jumpstartlab.com/blog\",\"requestedAt\":\"2013-06-16 21:38:28 -0700\",\"respondedIn\":37,\"referredBy\":\"http://jumpstartlab.com\",\"requestType\":\"GET\",\"parameters\":[],\"eventName\": \"Faz\",\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17\",\"resolutionWidth\":\"1920\",\"resolutionHeight\":\"1280\",\"ip\":\"63.29.38.211\"}",
-       "splat"=>[],
-     "captures"=>["jumpstartlab"],
-   "identifier"=>"jumpstartlab"}
-
+      post('/sources/r3m/data', payload6) 
       post('/sources/r3m/data', payload2)
       post('/sources/r3m/data', payload5)
       post('/sources/r3m/data', payload3)
       post('/sources/r3m/data', payload1)
       post('/sources/r3m/data', payload4)
-      post('/sources/123/data', payload6) 
     end
 
     def test_it_does_not_store_the_same_event_multiple_times
-      expected_events=["boo","socialLogin","Faz"]
+      expected_events=["boo", "differentEvent", "socialLogin"]
       actual = TrafficSpy::Event.all
       actual_events = actual.map { |event| event.name }
 
       assert_equal expected_events.sort, actual_events.sort
     end
 
-    def test_can_find_events_for_a_client
-      result = Event.events_for_a_client('r3m')
+    def test_it_can_rank_events_for_a_client
+      expected = {"boo"=>3, "socialLogin"=>2, "differentEvent"=>1}
+      result = Event.ranked_events_for_a_client('r3m')
 
-      assert_equal 2, result.size
-      assert_equal 2, result['socialLogin']
+      assert_equal expected, result
     end
 
     def app
