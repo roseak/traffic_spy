@@ -24,5 +24,13 @@ module TrafficSpy
       end.reverse.to_h
     end
 
+    def self.sorted(identifier)
+      urls = Client.find_by(identifier: identifier).urls
+      events = urls.map(&:events).flatten.map(&:name)
+      events.inject(Hash.new(0)) { |sum, event|
+        sum[event] += 1
+        sum
+      }
+    end
   end
 end
