@@ -58,6 +58,17 @@ module TrafficSpy
           "WINDOWS 2000" => 3,
         }
       }
+    end
+
+    get '/sources/:identifier/resolution' do |identifier|
+      @params = {
+        identifier: identifier,
+        path: identifier,
+        title: "Screen Resolutions",
+        header: "Resolution",
+        comparison: "Requests",
+        data: Resolution.all_for_client_sorted(identifier)
+      }
 
       erb :list
     end

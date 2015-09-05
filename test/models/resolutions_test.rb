@@ -100,20 +100,48 @@ class ScreenResTest < Minitest::Test
       "ip":"63.29.38.216"
     }'
 
+    payload7 = '{
+      "url":"http://r3m.com/pizza",
+      "requestedAt":"2013-07-16 21:38:27 -0700",
+      "respondedIn":37,
+      "referredBy":"http://r3m.com",
+      "requestType":"POST",
+      "parameters":[],
+      "eventName": "socialLogin",
+      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
+      "resolutionWidth":"320",
+      "resolutionHeight":"240",
+      "ip":"63.29.38.216"
+    }'
+
     post('/sources/r3m/data', {'payload' => payload2})
     post('/sources/r3m/data', {'payload' => payload5})
     post('/sources/r3m/data', {'payload' => payload3})
     post('/sources/r3m/data', {'payload' => payload1})
     post('/sources/r3m/data', {'payload' => payload4})
     post('/sources/r3m/data', {'payload' => payload6})
+    post('/sources/123/data', {'payload' => payload7})
   end
 
   def test_it_does_not_store_duplicate_screen_resolutions
     actual_resolutions = TrafficSpy::Resolution.all.sort
     
     actual = actual_resolutions.map { |o| o.resolution }
-    expected = ["1920x1280", "2500x1800", "800x600"].sort
+    expected = ["1920x1280", "2500x1800", "800x600", "320x240"]
 
+    assert_equal expected, actual
+  end
+
+  def test_it_can_get_resolutions_for_client
+    client = TrafficSpy::Client.find_by(identifier: "r3m")
+    actual = TrafficSpy::Resolution.all_for_client("r3m")
+    assert_equal ["1920x1280", "1920x1280", "1920x1280", "1920x1280", "2500x1800", "800x600"], actual
+  end
+
+  def test_it_can_sort_all_for_client_by_requests
+    client = TrafficSpy::Client.find_by(identifier: "r3m")
+    actual = TrafficSpy::Resolution.all_for_client_sorted("r3m")
+    expected = {"1920x1280" => 4, "2500x1800" => 1, "800x600" => 1}
     assert_equal expected, actual
   end
 
