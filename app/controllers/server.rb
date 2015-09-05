@@ -22,13 +22,20 @@ module TrafficSpy
     end
 
     get '/sources/:identifier' do |identifier|
-      @params = {
-        identifier: identifier,
-        title: "Statistics",
-        path: identifier,
-      }
+      if Client.find_by(identifier: identifier)
+        @params = {
+          identifier: identifier,
+          title: "Statistics",
+          path: identifier,
+        }
+        erb :stats
+      else
+        @params = {
+          message: "Identifer Does Not Exist"
+        }
+        erb :error
+      end
 
-      erb :stats
     end
 
     get '/sources/:identifier/urls' do |identifier|
