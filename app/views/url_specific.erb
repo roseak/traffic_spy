@@ -46,22 +46,8 @@
     </tbody>
   </table>
 </div>
-<div class="panel panel-default">
-  <div class="panel-heading">Most Popular Operating Systems</div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>OS</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @params[:operating_systems].each do |operating_system, count| %>
-        <tr>
-          <td><%= operating_system %></td>
-          <td><%= count %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<ul class="list-group">
+  <% @params[:http_verbs].each do |verb| %>
+    <li class="list-group-item"><%= verb %></li>
+  <% end %>
+</li>

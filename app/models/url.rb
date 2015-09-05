@@ -7,6 +7,7 @@ module TrafficSpy
     has_many :referrals, through: :visits
     has_many :web_browsers, through: :visits
     has_many :operating_systems, through: :visits
+    has_many :request_type, through: :visits
 
     def self.urls_for_a_client(identifier)
       Client.find_by(identifier: identifier).urls
@@ -67,6 +68,10 @@ module TrafficSpy
         sum[operating_system.operating_system] += 1
         sum
       }
+    end
+
+    def self.request_types(identifier, url)
+      request_types = url_object(identifier, url).visits.map(&:request_type).map(&:request_type).uniq
     end
   end
 end

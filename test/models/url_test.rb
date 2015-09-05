@@ -223,6 +223,14 @@ class UrlTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_can_get_request_types
+    identifier = 'r3m'
+    path = 'blog'
+    actual = TrafficSpy::Url.request_types(identifier, path)
+    expected = ["GET"]
+    assert_equal expected, actual
+  end
+
   def teardown
     DatabaseCleaner.clean
   end

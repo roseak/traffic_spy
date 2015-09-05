@@ -82,6 +82,7 @@ module TrafficSpy
         referrers: Url.referrers(identifier, url),
         browsers: Url.browsers(identifier, url),
         operating_systems: Url.operating_systems(identifier, url),
+        http_verbs: Url.request_types(identifier, url),
       }
 
       erb :url_specific
