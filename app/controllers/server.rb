@@ -51,13 +51,23 @@ module TrafficSpy
         title: "Operating Systems",
         header: "OS",
         comparison: "Requests",
-        data: {
-          "OSX YOSEMITE" => 10,
-          "WINDOWS XP" => 5,
-          "UBUNTU LINUX" => 4,
-          "WINDOWS 2000" => 3,
-        }
+        data: OperatingSystem.ranked_operating_systems_with_count(identifier)
       }
+
+      erb :list
+    end
+
+    get '/sources/:identifier/browsers' do |identifier|
+      @params = {
+        identifier: identifier,
+        path: identifier,
+        title: "Web Browsers",
+        header: "Browsers",
+        comparison: "Requests",
+        data: WebBrowser.ranked_web_browsers_with_count(identifier)
+      }
+
+      erb :list
     end
 
     get '/sources/:identifier/resolution' do |identifier|
