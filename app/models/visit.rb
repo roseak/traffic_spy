@@ -6,7 +6,7 @@ module TrafficSpy
     belongs_to :event
     belongs_to :user_env
     belongs_to :request_type
-    belongs_to :screen_resolution
+    belongs_to :resolution
     belongs_to :web_browser
     belongs_to :operating_system
   end

@@ -109,7 +109,7 @@ class ScreenResTest < Minitest::Test
   end
 
   def test_it_does_not_store_duplicate_screen_resolutions
-    actual_resolutions = TrafficSpy::ScreenResolution.all.sort
+    actual_resolutions = TrafficSpy::Resolution.all.sort
     
     actual = actual_resolutions.map { |o| o.resolution }
     expected = ["1920x1280", "2500x1800", "800x600"].sort

@@ -61,7 +61,7 @@ module TrafficSpy
     end
 
     def create_resolution(params)
-      ScreenResolution.find_or_create_by(params)
+      Resolution.find_or_create_by(params)
     end
 
     def screen_res_params
