@@ -1,21 +1,20 @@
-require 'digest'
-#require 'sinatra-partial'
+require "digest"
 
 module TrafficSpy
   class Server < Sinatra::Base
     register Sinatra::Partial
     set :partial_template_engine, :erb
 
-    get '/' do
+    get "/" do
       erb :index
     end
 
-    post '/sources' do
+    post "/sources" do
       prepped = Client.prep(params)
       client = Client.new(prepped)
 
       if client.save
-        body client.attributes.select { |k, v| k == "identifier" }.to_json
+        body client.attributes.select { |k, _v| k == "identifier" }.to_json
       elsif client.errors.full_messages.any? { |error| error.include?("blank") }
         body client.errors.full_messages.first
         status 400
@@ -25,7 +24,7 @@ module TrafficSpy
       end
     end
 
-    get '/sources/:identifier' do |identifier|
+    get "/sources/:identifier" do |identifier|
       if Client.find_by(identifier: identifier)
         @params = {
           identifier: identifier,
@@ -37,10 +36,9 @@ module TrafficSpy
         @params = { message: "Identifer Does Not Exist" }
         erb :error
       end
-
     end
 
-    get '/sources/:identifier/urls' do |identifier|
+    get "/sources/:identifier/urls" do |identifier|
       @params = {
         identifier: identifier,
         path: identifier,
@@ -53,7 +51,7 @@ module TrafficSpy
       erb :list
     end
 
-    get '/sources/:identifier/events' do |identifier|
+    get "/sources/:identifier/events" do |identifier|
       @event_counts = Event.ranked_event_counts(identifier)
       @params = {
         identifier: identifier,
@@ -66,7 +64,7 @@ module TrafficSpy
       erb :events
     end
 
-    get '/sources/:identifier/os' do |identifier|
+    get "/sources/:identifier/os" do |identifier|
       @params = {
         identifier: identifier,
         path: identifier,
@@ -79,7 +77,7 @@ module TrafficSpy
       erb :list
     end
 
-    get '/sources/:identifier/browsers' do |identifier|
+    get "/sources/:identifier/browsers" do |identifier|
       @params = {
         identifier: identifier,
         path: identifier,
@@ -92,7 +90,7 @@ module TrafficSpy
       erb :list
     end
 
-    get '/sources/:identifier/resolution' do |identifier|
+    get "/sources/:identifier/resolution" do |identifier|
       @params = {
         identifier: identifier,
         path: identifier,
@@ -105,17 +103,17 @@ module TrafficSpy
       erb :list
     end
 
-    get '/sources/:identifier/urls/*' do |identifier, url|
+    get "/sources/:identifier/urls/*" do |identifier, url|
       if Url.has_been_requested?(identifier, url)
         @params = {
           identifier: identifier,
           path: "#{identifier}/#{url}",
           title: "URL Specific Data",
-          data: Url.responded_in(identifier, url),
+          response: Url.responded_in(identifier, url),
           referrers: Url.referrers(identifier, url),
           browsers: Url.browsers(identifier, url),
           operating_systems: Url.operating_systems(identifier, url),
-          http_verbs: Url.request_types(identifier, url),
+          http_verbs: Url.ranked_request_types_for_url(identifier, url)
         }
         erb :url_specific
       else
@@ -124,7 +122,7 @@ module TrafficSpy
       end
     end
 
-    get '/sources/:identifier/events/*' do |identifier, event|
+    get "/sources/:identifier/events/*" do |identifier, event|
       if Event.find_by(name: event)
         this_event = Event.find_by(name: event)
         @params = {
@@ -141,6 +139,7 @@ module TrafficSpy
       end
     end
 
+<<<<<<< HEAD
     get '/sources/:identifier/responsetime' do |identifier|
       @time = Client.avg_response_time(identifier)
 
@@ -148,10 +147,13 @@ module TrafficSpy
     end
 
     post '/sources/:identifier/data' do |identifier|
+=======
+    post "/sources/:identifier/data" do |identifier|
+>>>>>>> c5bb6f451e72d1cbf431a91af95b2416ae887be6
       legit = Payload.payload_legit?(params)
 
       if legit
-        raw_payload = params.fetch('payload', nil)
+        raw_payload = params.fetch("payload", nil)
         parsed = JSON.parse(raw_payload)
         client = Client.find_by(identifier: identifier)
         long_string = parsed.values.join
@@ -169,7 +171,7 @@ module TrafficSpy
         body "Already received request"
       else
         parsed["client_id"] = "#{client.id}"
-        payload = Payload.new(parsed)
+        Payload.new(parsed)
         Sha.create(sha: key)
       end
     end
@@ -178,5 +180,4 @@ module TrafficSpy
       erb :error
     end
   end
-
 end

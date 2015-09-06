@@ -70,9 +70,18 @@ module TrafficSpy
       end
     end
 
-    def self.request_types(identifier, url)
-      visits_by_url = url_object(identifier, url).visits
-      visits_by_url.map(&:request_type).map(&:request_type).uniq
+    def self.requests_for_a_url(identifier, url)
+      url_object(identifier, url).visits.map(&:request_type)
+    end
+
+    def self.counted_requests_for_url(identifier, url)
+      requests_for_a_url(identifier, url).group_by { |type| type.request_type }
+    end
+
+    def self.ranked_request_types_for_url(identifier, url)
+      counted_requests_for_url(identifier, url).map do |type, types|
+        [type, types.length]
+      end.to_h
     end
 
     def self.has_been_requested?(identifier, url_tail)
