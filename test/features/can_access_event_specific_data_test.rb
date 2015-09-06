@@ -6,6 +6,6 @@ class CanAccessEventSpecificData < FeatureTest
     click_link "partyTime"
 
     assert_equal "/sources/r3m/events/partyTime", current_path
-
+    assert page.has_content?("3")
   end
 end

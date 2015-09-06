@@ -35,31 +35,40 @@ module TrafficSpy
     end
 
     def self.count_for_client(event, identifier)
-      binding.pry
       Client.find_by(identifier: identifier).urls
                                             .map(&:visits).flatten
                                             .map(&:event).count(event)
     end
 
-    def self.timestamps(event)
-      event.visits.map(&:requested_at).map do |time|
+    def self.timestamps(event, identifier)
+      client = Client.find_by(identifier: identifier)
+      visits = client.urls.map(&:visits).flatten
+
+      event_and_visit = visits.map do |visit|
+        [visit, visit.event]
+      end
+
+      relevant_visits = event_and_visit.select { |visit, v_event| v_event.name == event.name }
+      visits = relevant_visits.map { |v,e| v}
+      
+      visits.map(&:requested_at).map do |time|
         hour = Time.parse(time).strftime("%l:00%P")
       end
     end
 
-    def self.sorted_timestamps(event)
-      timestamps(event).inject(Hash.new(0)) do |sum, timestamp|
+    def self.sorted_timestamps(event, identifier)
+      timestamps(event, identifier).inject(Hash.new(0)) do |sum, timestamp|
         sum[timestamp] += 1
         sum
       end
     end
 
-    def self.all_sorted_timestamps(event)
+    def self.all_sorted_timestamps(event, identifier)
       times = Hash.new
       24.times do |hour|
         times[Time.parse("#{hour}:00").strftime("%l:00%P")] = 0
       end
-      sorted_timestamps(event).each do |time, hits|
+      sorted_timestamps(event, identifier).each do |time, hits|
         times[time] = hits
       end
       times
