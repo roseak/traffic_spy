@@ -6,6 +6,7 @@ gem 'pg'
 gem 'activerecord'
 gem 'useragent'
 gem 'sinatra-activerecord'
+gem 'simplecov'
 
 group :development, :test do
 gem 'sinatra-partial', require: 'sinatra/partial'
