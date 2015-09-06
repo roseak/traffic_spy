@@ -83,6 +83,15 @@ module TrafficSpy
       assert_equal expected, actual
     end
 
+    def test_get_timestamps_for_events
+      event = Event.find_by(name: "socialLogin")
+      expected = [
+        " 9:00pm", " 9:00pm"
+      ]
+      actual = Event.timestamps(event)
+      assert_equal expected, actual
+    end
+
     def app
       TrafficSpy::Server
     end
