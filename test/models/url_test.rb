@@ -91,7 +91,7 @@ class UrlTest < Minitest::Test
       "requestedAt":"2013-07-16 21:38:28 -0700",
       "respondedIn":20,
       "referredBy":"",
-      "requestType":"GET",
+      "requestType":"PUSH",
       "parameters":[],
       "eventName": "socialLogin",
       "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
@@ -119,7 +119,7 @@ class UrlTest < Minitest::Test
       "requestedAt":"2013-07-16 21:38:28 -0700",
       "respondedIn":37,
       "referredBy":"http://www.bing.com",
-      "requestType":"GET",
+      "requestType":"POST",
       "parameters":[],
       "eventName": "socialLogin",
       "userAgent":"Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko",
@@ -223,11 +223,11 @@ class UrlTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_can_get_request_types
+  def test_can_get_ranked_request_types
     identifier = "r3m"
     path = "blog"
-    actual = TrafficSpy::Url.request_types(identifier, path)
-    expected = ["GET"]
+    actual = TrafficSpy::Url.ranked_request_types_for_url(identifier, path)
+    expected = { "GET" => 3, "POST" => 1 } 
     assert_equal expected, actual
   end
 
