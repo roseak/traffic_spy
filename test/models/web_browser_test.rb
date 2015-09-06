@@ -1,4 +1,4 @@
-require './test/test_helper'
+require "./test/test_helper"
 
 class WebBrowserTest < Minitest::Test
   include Rack::Test::Methods
@@ -10,11 +10,11 @@ class WebBrowserTest < Minitest::Test
   def setup
     DatabaseCleaner.start
 
-    attributes = {'identifier' => 'r3m', 'rootUrl' => 'http://r3m.com'}
-    post('/sources', attributes)
+    attributes = { "identifier" => "r3m", "rootUrl" => "http://r3m.com" }
+    post("/sources", attributes)
 
-    attributes2 = {'identifier' => '123', 'rootUrl' => 'http://123.com'}
-    post('/sources', attributes2)
+    attributes2 = { "identifier" => "123", "rootUrl" => "http://123.com" }
+    post("/sources", attributes2)
 
     payload1 = '{
       "url":"http://r3m.com/blog",
@@ -99,27 +99,27 @@ class WebBrowserTest < Minitest::Test
       "ip":"63.29.38.216"
     }'
 
-    post('/sources/r3m/data', {'payload' => payload2})
-    post('/sources/r3m/data', {'payload' => payload5})
-    post('/sources/r3m/data', {'payload' => payload3})
-    post('/sources/r3m/data', {'payload' => payload1})
-    post('/sources/r3m/data', {'payload' => payload4})
-    post('/sources/r3m/data', {'payload' => payload6})
+    posl("/sources/r3m/data", "payload" => payload2)
+    post("/sources/r3m/data", "payload" => payload5)
+    post("/sources/r3m/data", "payload" => payload3)
+    post("/sources/r3m/data", "payload" => payload1)
+    post("/sources/r3m/data", "payload" => payload4)
+    post("/sources/r3m/data", "payload" => payload6)
   end
 
   def test_it_does_not_store_duplicate_web_browsers
     actual_browsers = TrafficSpy::WebBrowser.all.sort
 
-    actual = actual_browsers.map { |o| o.browser }
+    actual = actual_browsers.map(&:browser)
     expected = ["Internet Explorer", "Firefox", "Chrome"]
 
     assert_equal expected, actual
   end
 
   def test_it_ranks_web_browsers_by_visits
-    identifier = 'r3m'
+    identifier = "r3m"
 
-    expected_order = [ "Chrome", "Internet Explorer",  "Firefox"]
+    expected_order = ["Chrome", "Internet Explorer", "Firefox"]
     expected_visits = [3, 2, 1]
     expected = expected_order.zip(expected_visits).to_h
 
