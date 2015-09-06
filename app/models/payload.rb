@@ -95,7 +95,7 @@ module TrafficSpy
 
     def visit_params(related_objects)
       { "requested_at" => params["requestedAt"],
-        "responded_in" => params["respondedIn"],
+        "responded_in" => params["respondedIn"].to_i,
         "url_id" => related_objects[:url].id,
         "referral_id" => related_objects[:referral].id,
         "event_id" => related_objects[:event].id,
