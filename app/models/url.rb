@@ -38,13 +38,11 @@ module TrafficSpy
     end
 
     def self.responded_in(identifier, url)
-      times = url_object(identifier, url).visits.map(&:responded_in)
+      visits = url_object(identifier, url).visits
       {
-        "Shortest Response Time" => times.min,
-        "Longest Response Time" => times.max,
-        "Average Response Time" => (times.inject(0) do |sum, time|
-          sum + time.to_i
-        end / times.length).to_s,
+        "min" => visits.minimum(:responded_in).to_i,
+        "max" => visits.maximum(:responded_in).to_i,
+        "avg" => url_object(identifier, url).visits.average(:responded_in).to_i
       }
     end
 

@@ -6,7 +6,8 @@ class CanViewAvergeResponseTime < FeatureTest
     click_link('Average Response Time')
 
     assert_equal '/sources/r3m/responsetime', current_path
-    assert page.has_content?("Average Response Time across all URLs")
+    assert page.has_content?("Average Response Time")
+    assert page.has_content?("37")
 
   end
 end
