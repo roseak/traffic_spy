@@ -1,0 +1,21 @@
+.background {
+  background-image: url("https://static.pexels.com/photos/6571/pexels-photo.jpeg");
+  background-size: cover;
+  padding-bottom: 500px;
+}
+
+.text {
+  padding-left: 50px;
+  padding-top: 50px;
+}
+
+.error {
+  font-family: 'Special Elite', cursive;
+  font-size: 8em;
+}
+
+.message {
+  font-family: 'Voltaire', sans-serif;
+  font-size: 3em;
+  padding-left: 40px;
+}
