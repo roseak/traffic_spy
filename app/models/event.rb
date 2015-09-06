@@ -27,5 +27,33 @@ module TrafficSpy
     def self.max(identifier)
       ranked_events_for_a_client(identifier).first.first
     end
+
+    def self.count(event)
+      event.visits.size
+    end
+
+    def self.timestamps(event)
+      event.visits.map(&:requested_at).map do |time|
+        hour = Time.parse(time).strftime("%l:00%P")
+      end
+    end
+
+    def self.sorted_timestamps(event)
+      timestamps(event).inject(Hash.new(0)) do |sum, timestamp|
+        sum[timestamp] += 1
+        sum
+      end
+    end
+
+    def self.all_sorted_timestamps(event)
+      times = Hash.new
+      24.times do |hour|
+        times[Time.parse("#{hour}:00").strftime("%l:00%P")] = 0
+      end
+      sorted_timestamps(event).each do |time, hits|
+        times[time] = hits
+      end
+      times
+    end
   end
 end
