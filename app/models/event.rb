@@ -7,19 +7,17 @@ module TrafficSpy
     end
 
     def self.grouped_events(identifier)
-      events_for_a_client(identifier).group_by do |event|
-        event.name
-      end
+      events_for_a_client(identifier).group_by(&:name)
     end
 
     def self.counted_grouped_events(identifier)
-      grouped_events(identifier).map  do |event, events|
+      grouped_events(identifier).map do |event, events|
         [event, events.length]
       end.to_h
     end
 
     def self.ranked_events_for_a_client(identifier)
-      counted_grouped_events(identifier).sort_by do |event, count|
+      counted_grouped_events(identifier).sort_by do |_event, count|
         count
       end.reverse.to_h
     end
@@ -35,9 +33,8 @@ module TrafficSpy
     end
 
     def self.count_for_client(event, identifier)
-      Client.find_by(identifier: identifier).urls
-                                            .map(&:visits).flatten
-                                            .map(&:event).count(event)
+      visits_for_a_client = Client.find_by(identifier: identifier).urls
+      visits_for_a_client.map(&:visits).flatten.map(&:event).count(event)
     end
 
     def self.timestamps(event, identifier)
@@ -48,11 +45,13 @@ module TrafficSpy
         [visit, visit.event]
       end
 
-      relevant_visits = event_and_visit.select { |visit, v_event| v_event.name == event.name }
-      visits = relevant_visits.map { |v,e| v}
-      
+      relevant_visits = event_and_visit.select do |_visit, v_event|
+        v_event.name == event.name
+      end
+      visits = relevant_visits.map { |v, _e| v }
+
       visits.map(&:requested_at).map do |time|
-        hour = Time.parse(time).strftime("%l:00%P")
+        Time.parse(time).strftime("%l:00%P")
       end
     end
 

@@ -7,8 +7,8 @@ module TrafficSpy
     has_many :urls
 
     def self.prep(params)
-      { :identifier => params.fetch("identifier", nil), 
-        :root_url => params.fetch("rootUrl", nil)}
+      { identifier: params.fetch("identifier", nil),
+        root_url:   params.fetch("rootUrl", nil) }
     end
   end
 end
