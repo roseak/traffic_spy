@@ -7,6 +7,7 @@ gem 'activerecord'
 gem 'useragent'
 gem 'sinatra-activerecord'
 gem 'simplecov'
+gem 'rubocop'
 
 group :development, :test do
 gem 'sinatra-partial', require: 'sinatra/partial'
