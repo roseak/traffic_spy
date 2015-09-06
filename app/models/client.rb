@@ -9,7 +9,8 @@ module TrafficSpy
 
     def self.prep(params)
       { :identifier => params.fetch("identifier", nil), 
-        :root_url => params.fetch("rootUrl", nil)}
+        :root_url => params.fetch("rootUrl", nil)
+      }
     end
 
     def self.avg_response_time(identifier)
