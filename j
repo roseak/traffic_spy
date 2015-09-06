@@ -3,6 +3,6 @@
 
 <div class="list-group">
   <ul>
-    <%= partial :'partials/event-button', collection: @params %>
+    <%= partial :'partials/event_button', collection: @params %>
   </ul>
 </div>
