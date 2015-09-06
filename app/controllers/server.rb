@@ -55,7 +55,7 @@ module TrafficSpy
         path: identifier,
         title: "Aggregate Event Data",
         most_received_event: Event.max(identifier),
-        events: Event.events_for_a_client(identifier).map(&:name).uniq,
+        ranked_events: Event.ranked_events_for_a_client(identifier)
       }
 
       erb :events
