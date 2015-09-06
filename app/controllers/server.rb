@@ -107,15 +107,12 @@ module TrafficSpy
 
     get '/sources/:identifier/urls/*' do |identifier, url|
       if Url.has_been_requested?(identifier, url)
+        url_data = UrlData.prepare(identifier, url)
         @params = {
           identifier: identifier,
           path: "#{identifier}/#{url}",
           title: "URL Specific Data",
-          response: Url.responded_in(identifier, url),
-          referrers: Url.referrers(identifier, url),
-          browsers: Url.browsers(identifier, url),
-          operating_systems: Url.operating_systems(identifier, url),
-          http_verbs: Url.ranked_request_types_for_url(identifier, url)
+          data: url_data
         }
         erb :url_specific
       else

@@ -1,95 +1,22 @@
-<div class="panel panel-default">
-  <div class="panel-heading">Response Time Statistics</div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Response Time</th>
-        <th>Miliseconds</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @params[:response].each do |stat, time| %>
+<% @params[:data].each do |contents| %>
+<% table = contents.last %>
+  <div class="panel panel-default">
+    <div class="panel-heading"><%= table[:title] %></div>
+    <table class="table">
+      <thead>
         <tr>
-          <td><%= stat %></td>
-          <td><%= time %></td>
+          <th><%= table[:headers].first %></th>
+          <th><%= table[:headers].last %></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">Most Popular Referrers</div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Referrer</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @params[:referrers].each do |ref, count| %>
-        <tr>
-          <td><%= ref %></td>
-          <td><%= count %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">Most Popular Browsers</div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Browser</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @params[:browsers].each do |browser, count| %>
-        <tr>
-          <td><%= browser %></td>
-          <td><%= count %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">Most Popular Operating Systems</div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>OS</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @params[:operating_systems].each do |os, count| %>
-        <tr>
-          <td><%= os %></td>
-          <td><%= count %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">Most Popular Request Types</div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Request Type</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @params[:http_verbs].each do |verb, count| %>
-      <tr>
-        <td><%= verb %></td>
-        <td><%= count %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-</li>
+      </thead>
+      <tbody>
+        <% table[:rows].each do |label, value| %>
+          <tr>
+            <td><%= label %></td>
+            <td><%= value %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
