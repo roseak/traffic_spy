@@ -40,5 +40,16 @@ module TrafficSpy
         sum
       end
     end
+
+    def self.all_sorted_timestamps(event)
+      times = Hash.new
+      24.times do |hour|
+        times[Time.parse("#{hour}:00").strftime("%l:00%P")] = 0
+      end
+      sorted_timestamps(event).each do |time, hits|
+        times[time] = hits
+      end
+      times
+    end
   end
 end

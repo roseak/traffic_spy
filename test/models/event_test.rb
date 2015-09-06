@@ -101,6 +101,38 @@ module TrafficSpy
       assert_equal actual, expected
     end
 
+    def test_lists_all_sorted_timestmaps
+      event = Event.find_by(name: "socialLogin")
+      expected = {
+        " 1:00am" => 0,
+        " 2:00am" => 0,
+        " 3:00am" => 0,
+        " 4:00am" => 0,
+        " 5:00am" => 0,
+        " 6:00am" => 0,
+        " 7:00am" => 0,
+        " 8:00am" => 0,
+        " 9:00am" => 0,
+        "10:00am" => 0,
+        "11:00am" => 0,
+        "12:00pm" => 0,
+        " 1:00pm" => 0,
+        " 2:00pm" => 0,
+        " 3:00pm" => 0,
+        " 4:00pm" => 0,
+        " 5:00pm" => 0,
+        " 6:00pm" => 0,
+        " 7:00pm" => 0,
+        " 8:00pm" => 0,
+        " 9:00pm" => 2,
+        "10:00pm" => 0,
+        "11:00pm" => 0,
+        "12:00am" => 0,
+      }
+      actual = Event.all_sorted_timestamps(event)
+      assert_equal expected, actual
+    end
+
     def app
       TrafficSpy::Server
     end
