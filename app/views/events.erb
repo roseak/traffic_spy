@@ -1,7 +1,8 @@
+
 <h2 class="lead">Most Received Event: <%= @params[:most_received_event] %></h2>
 
 <div class="list-group">
-  <% @params[:events].each do |event| %>
-    <a type="button" class="list-group-item" href="events/<%= event %>"><%= event %></a>
+  <% @params[:ranked_events].each do |event, count| %>
+  <a type="button" class="list-group-item" href="events/<%= event %>">Event:  <%= event %>   Count:  <%= count %></a>
   <% end %>
 </div>
