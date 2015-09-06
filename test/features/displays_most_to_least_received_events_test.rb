@@ -6,15 +6,14 @@ module TrafficSpy
     def test_can_get_list_of_urls_from_most_to_least_requested
       click_link("Events")
 
-      save_and_open_page
       assert_equal "/sources/r3m/events", current_path
 
-      assert page.has_content?("Faz")
-      assert page.has_content?("boo")
+      assert page.has_content?("partyTime")
+      assert page.has_content?("parade")
       assert page.has_content?("socialLogin")
-      # assert page.has_content?("3")
-      # assert page.has_content?("2")
-      # assert page.has_content?("1")
+      assert page.has_content?("3")
+      assert page.has_content?("2")
+      assert page.has_content?("1")
     end
   end
 end
