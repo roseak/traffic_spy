@@ -55,7 +55,7 @@ module TrafficSpy
         path: identifier,
         title: "Aggregate Event Data",
         most_received_event: Event.max(identifier),
-        ranked_events: Event.ranked_events_for_a_client(identifier)
+        events: Event.events_for_a_client(identifier).map(&:name).uniq
       }
 
       erb :events
@@ -120,15 +120,20 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/events/*' do |identifier, event|
-      this_event = Event.find_by(name: event)
-      @params = {
-        identifier: identifier,
-        path: "#{identifier} - #{event}",
-        title: "Event Specific Data",
-        total: Event.count(this_event),
-        data: Event.all_sorted_timestamps(this_event),
-      }
-      erb :event
+      if Event.find_by(name: event)
+        this_event = Event.find_by(name: event)
+        @params = {
+          identifier: identifier,
+          path: "#{identifier} - #{event}",
+          title: "Event Specific Data",
+          total: Event.count(this_event),
+          data: Event.all_sorted_timestamps(this_event),
+        }
+        erb :event
+      else
+        @params = { message: "No event with that name has been defined." }
+        erb :error
+      end
     end
 
     post '/sources/:identifier/data' do |identifier|
