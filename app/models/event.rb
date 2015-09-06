@@ -33,5 +33,12 @@ module TrafficSpy
         hour = Time.parse(time).strftime("%l:00%P")
       end
     end
+
+    def self.sorted_timestamps(event)
+      timestamps(event).inject(Hash.new(0)) do |sum, timestamp|
+        sum[timestamp] += 1
+        sum
+      end
+    end
   end
 end

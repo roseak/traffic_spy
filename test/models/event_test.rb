@@ -92,6 +92,15 @@ module TrafficSpy
       assert_equal expected, actual
     end
 
+    def test_sorts_timestamps_by_count
+      event = Event.find_by(name: "socialLogin")
+      expected = {
+        " 9:00pm" => 2
+      }
+      actual = Event.sorted_timestamps(event)
+      assert_equal actual, expected
+    end
+
     def app
       TrafficSpy::Server
     end
