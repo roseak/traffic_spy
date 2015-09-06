@@ -88,7 +88,7 @@ module TrafficSpy
       expected = [
         " 9:00pm", " 9:00pm"
       ]
-      actual = Event.timestamps(event)
+      actual = Event.timestamps(event, 'r3m')
       assert_equal expected, actual
     end
 
@@ -97,8 +97,8 @@ module TrafficSpy
       expected = {
         " 9:00pm" => 2
       }
-      actual = Event.sorted_timestamps(event)
-      assert_equal actual, expected
+      actual = Event.sorted_timestamps(event, 'r3m')
+      assert_equal expected, actual
     end
 
     def test_lists_all_sorted_timestmaps
@@ -129,14 +129,14 @@ module TrafficSpy
         "11:00pm" => 0,
         "12:00am" => 0,
       }
-      actual = Event.all_sorted_timestamps(event)
+      actual = Event.all_sorted_timestamps(event, 'r3m')
       assert_equal expected, actual
     end
 
     def test_it_can_get_total_received_for_event
       event = Event.find_by(name: "socialLogin")
       expected = 2
-      actual = Event.count(event)
+      actual = Event.count_for_client(event, 'r3m')
       assert_equal expected, actual
     end
 
