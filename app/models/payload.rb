@@ -10,7 +10,7 @@ module TrafficSpy
       related_objects[:referral] = create_referral(referral_params)
       related_objects[:event] = create_event(event_params)
       related_objects[:resolution] = create_resolution(screen_res_params)
-      related_objects[:operating_system] = create_operating_system(operating_system_params)
+      related_objects[:operating_system] = create_operating_system(os_params)
       related_objects[:browser] = create_browser(browser_params)
       related_objects[:user_env] = UserEnv.create(user_env_params)
       Visit.create(visit_params(related_objects))
@@ -80,7 +80,7 @@ module TrafficSpy
       OperatingSystem.find_or_create_by(params)
     end
 
-    def operating_system_params
+    def os_params
       { operating_system: UserAgent.parse(params["userAgent"]).os }
     end
 

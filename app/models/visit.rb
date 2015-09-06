@@ -10,9 +10,7 @@ module TrafficSpy
     belongs_to :operating_system
 
     def self.visits_for_a_client(identifier)
-      Url.urls_for_a_client(identifier).map do |url|
-        url.visits
-      end.flatten
+      Url.urls_for_a_client(identifier).map(&:visits).flatten
     end
   end
 end
