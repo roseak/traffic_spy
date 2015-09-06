@@ -1,4 +1,4 @@
-require './test/test_helper'
+require "./test/test_helper"
 
 class VisitTest < Minitest::Test
   include Rack::Test::Methods
@@ -10,11 +10,11 @@ class VisitTest < Minitest::Test
   def setup
     DatabaseCleaner.start
 
-    attributes = {'identifier' => 'r3m', 'rootUrl' => 'http://r3m.com'}
-    post('/sources', attributes)
+    attributes = { "identifier" => "r3m", "rootUrl" => "http://r3m.com" }
+    post("/sources", attributes)
 
-    attributes2 = {'identifier' => '123', 'rootUrl' => 'http://123.com'}
-    post('/sources', attributes2)
+    attributes2 = { "identifier" => "123", "rootUrl" => "http://123.com" }
+    post("/sources", attributes2)
 
     payload1 = '{
       "url":"http://r3m.com/blog",
@@ -128,14 +128,14 @@ class VisitTest < Minitest::Test
       "ip":"63.29.38.212"
     }'
 
-    post('/sources/r3m/data', {'payload' => payload2})
-    post('/sources/r3m/data', {'payload' => payload5})
-    post('/sources/r3m/data', {'payload' => payload3})
-    post('/sources/r3m/data', {'payload' => payload1})
-    post('/sources/123/data', {'payload' => payload7})
-    post('/sources/r3m/data', {'payload' => payload4})
-    post('/sources/r3m/data', {'payload' => payload6})
-    post('/sources/r3m/data', {'payload' => payload8})
+    post("/sources/r3m/data", "payload" => payload2)
+    post("/sources/r3m/data", "payload" => payload5)
+    post("/sources/r3m/data", "payload" => payload3)
+    post("/sources/r3m/data", "payload" => payload1)
+    post("/sources/123/data", "payload" => payload7)
+    post("/sources/r3m/data", "payload" => payload4)
+    post("/sources/r3m/data", "payload" => payload6)
+    post("/sources/r3m/data", "payload" => payload8)
 
     @visits_r3m = TrafficSpy::Visit.visits_for_a_client("r3m")
     @visits_123 = TrafficSpy::Visit.visits_for_a_client("123")

@@ -1,4 +1,4 @@
-require './test/test_helper'
+require "./test/test_helper"
 
 class UrlTest < Minitest::Test
   include Rack::Test::Methods
@@ -10,11 +10,11 @@ class UrlTest < Minitest::Test
   def setup
     DatabaseCleaner.start
 
-    attributes = {'identifier' => 'r3m', 'rootUrl' => 'http://r3m.com'}
-    post('/sources', attributes)
+    attributes = { "identifier" => "r3m", "rootUrl" => "http://r3m.com" }
+    post("/sources", attributes)
 
-    attributes2 = {'identifier' => '123', 'rootUrl' => 'http://123.com'}
-    post('/sources', attributes2)
+    attributes2 = { "identifier" => "123", "rootUrl" => "http://123.com" }
+    post("/sources", attributes2)
 
     payload1 = '{
       "url":"http://r3m.com/blog",
@@ -128,47 +128,47 @@ class UrlTest < Minitest::Test
       "ip":"63.29.38.211"
     }'
 
-    post('/sources/r3m/data', {'payload' => payload2})
-    post('/sources/r3m/data', {'payload' => payload5})
-    post('/sources/r3m/data', {'payload' => payload3})
-    post('/sources/r3m/data', {'payload' => payload1})
-    post('/sources/123/data', {'payload' => payload7})
-    post('/sources/r3m/data', {'payload' => payload4})
-    post('/sources/r3m/data', {'payload' => payload6})
-    post('/sources/r3m/data', {'payload' => payload8})
+    post("/sources/r3m/data", "payload" => payload2)
+    post("/sources/r3m/data", "payload" => payload5)
+    post("/sources/r3m/data", "payload" => payload3)
+    post("/sources/r3m/data", "payload" => payload1)
+    post("/sources/123/data", "payload" => payload7)
+    post("/sources/r3m/data", "payload" => payload4)
+    post("/sources/r3m/data", "payload" => payload6)
+    post("/sources/r3m/data", "payload" => payload8)
   end
 
   def test_can_find_all_urls_for_identifier
-    identifier = 'r3m'
+    identifier = "r3m"
 
     result = TrafficSpy::Url.urls_for_a_client(identifier)
     assert_equal 3, result.length
   end
 
   def test_it_determines_visits_for_urls
-    identifier = 'r3m'
+    identifier = "r3m"
 
-    expected_urls = ['http://r3m.com/blog', 'http://r3m.com/pizza', 'http://r3m.com/jonothy']
+    expected_urls = ["http://r3m.com/blog", "http://r3m.com/pizza", "http://r3m.com/jonothy"]
     expected_visits = [4, 2, 1]
     expected = expected_urls.zip(expected_visits).to_h
 
     actual_as_objects = TrafficSpy::Url.url_visits(identifier)
     actual_for_comparison = actual_as_objects.map do |k, v|
       [k.url, v]
-    end.to_h.sort_by {|url, visits| -visits }.to_h
+    end.to_h
+    actual_for_comparison = actual_for_comparison.sort_by { |_url, visits| -visits }.to_h
 
     assert_equal expected, actual_for_comparison
   end
 
   def test_it_ranks_visits_for_urls
-    identifier = 'r3m'
+    identifier = "r3m"
 
-    expected_order = ['blog', 'pizza', 'jonothy']
+    expected_order = ["blog", "pizza", "jonothy"]
     expected_visits = [4, 2, 1]
     expected = expected_order.zip(expected_visits).to_h
 
     actual = TrafficSpy::Url.ranked_url_string_visits(identifier)
-
 
     assert_equal expected, actual
   end
@@ -179,8 +179,8 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_get_response_times
-    identifier = 'r3m'
-    path = 'blog'
+    identifier = "r3m"
+    path = "blog"
     responded = TrafficSpy::Url.responded_in(identifier, path)
     assert_equal "25", responded["Shortest Response Time"]
     assert_equal "40", responded["Longest Response Time"]
@@ -188,8 +188,8 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_get_refferers
-    identifier = 'r3m'
-    path = 'blog'
+    identifier = "r3m"
+    path = "blog"
     actual = TrafficSpy::Url.referrers(identifier, path)
     expected = {
       "http://www.google.com" => 2,
@@ -200,8 +200,8 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_get_browsers
-    identifier = 'r3m'
-    path = 'blog'
+    identifier = "r3m"
+    path = "blog"
     actual = TrafficSpy::Url.browsers(identifier, path)
     expected = {
       "Chrome" => 2,
@@ -212,8 +212,8 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_get_operating_systems
-    identifier = 'r3m'
-    path = 'blog'
+    identifier = "r3m"
+    path = "blog"
     actual = TrafficSpy::Url.operating_systems(identifier, path)
     expected = {
       "Windows 7" => 2,
@@ -224,8 +224,8 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_get_request_types
-    identifier = 'r3m'
-    path = 'blog'
+    identifier = "r3m"
+    path = "blog"
     actual = TrafficSpy::Url.request_types(identifier, path)
     expected = ["GET"]
     assert_equal expected, actual

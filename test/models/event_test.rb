@@ -53,32 +53,32 @@ module TrafficSpy
   "captures"=>["jumpstartlab"],
   "identifier"=>"jumpstartlab"}
 
-      post('/sources/r3m/data', payload6) 
-      post('/sources/r3m/data', payload2)
-      post('/sources/r3m/data', payload5)
-      post('/sources/r3m/data', payload3)
-      post('/sources/r3m/data', payload1)
-      post('/sources/r3m/data', payload4)
+      post("/sources/r3m/data", payload6)
+      post("/sources/r3m/data", payload2)
+      post("/sources/r3m/data", payload5)
+      post("/sources/r3m/data", payload3)
+      post("/sources/r3m/data", payload1)
+      post("/sources/r3m/data", payload4)
     end
 
     def test_it_does_not_store_the_same_event_multiple_times
-      expected_events=["boo", "differentEvent", "socialLogin"]
+      expected_events = ["boo", "differentEvent", "socialLogin"]
       actual = TrafficSpy::Event.all
-      actual_events = actual.map { |event| event.name }
+      actual_events = actual.map(&:name)
 
       assert_equal expected_events.sort, actual_events.sort
     end
 
     def test_it_can_rank_events_for_a_client
-      expected = {"boo"=>3, "socialLogin"=>2, "differentEvent"=>1}
-      result = Event.ranked_events_for_a_client('r3m')
+      expected = { "boo" => 3, "socialLogin" => 2, "differentEvent" => 1 }
+      result = Event.ranked_events_for_a_client("r3m")
 
       assert_equal expected, result
     end
 
     def test_it_can_find_the_most_requested_event_for_a_client
       expected = "boo"
-      actual = Event.max('r3m')
+      actual = Event.max("r3m")
 
       assert_equal expected, actual
     end
@@ -140,13 +140,8 @@ module TrafficSpy
       assert_equal expected, actual
     end
 
-    def app
-      TrafficSpy::Server
-    end
-
     def teardown
       DatabaseCleaner.clean
     end
-
   end
 end
