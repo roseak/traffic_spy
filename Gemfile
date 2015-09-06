@@ -1,12 +1,15 @@
 source 'https://rubygems.org'
 
 gem 'sinatra', require: 'sinatra/base'
+gem 'sinatra-partial', require: 'sinatra/partial'
 gem 'pg'
 gem 'activerecord'
 gem 'useragent'
 gem 'sinatra-activerecord'
 
 group :development, :test do
+gem 'sinatra-partial', require: 'sinatra/partial'
+
   gem 'shotgun'
   gem 'minitest'
   gem 'tux'

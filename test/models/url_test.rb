@@ -1,6 +1,6 @@
 require './test/test_helper'
 
-class UrlTest < Minitest::Test
+class VisitTest < Minitest::Test
   include Rack::Test::Methods
 
   def app
