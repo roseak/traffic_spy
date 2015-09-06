@@ -3,6 +3,8 @@ require 'digest'
 
 module TrafficSpy
   class Server < Sinatra::Base
+    register Sinatra::Partial
+    set :partial_template_engine, :erb
 
     get '/' do
       erb :index
@@ -52,12 +54,13 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/events' do |identifier|
+      @event_counts = Event.ranked_event_counts(identifier)
       @params = {
         identifier: identifier,
         path: identifier,
         title: "Aggregate Event Data",
-        most_received_event: Event.max(identifier),
-        ranked_events: Event.ranked_events_for_a_client(identifier)
+        most_received_event: Event.max(identifier)#,
+        # ranked_events: 
       }
 
       erb :events

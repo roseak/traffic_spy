@@ -24,6 +24,12 @@ module TrafficSpy
       end.reverse.to_h
     end
 
+    def self.ranked_event_counts(identifier)
+      ranked_events_for_a_client(identifier).map do |event, count|
+        EventCount.new(name: event, count: count)
+      end
+    end
+
     def self.max(identifier)
       ranked_events_for_a_client(identifier).first.first
     end
