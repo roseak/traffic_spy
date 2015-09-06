@@ -140,7 +140,11 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/responsetime' do |identifier|
-      @time = Client.avg_response_time(identifier)
+      @params = { 
+        identifier: identifier,
+        title: "Average Response Time",
+        time: Client.avg_response_time(identifier)
+      }
 
       erb :response_time
     end
