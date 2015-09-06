@@ -1,4 +1,4 @@
-require './test/test_helper'
+require "./test/test_helper"
 
 class OperatingSystemTest < Minitest::Test
   include Rack::Test::Methods
@@ -10,11 +10,11 @@ class OperatingSystemTest < Minitest::Test
   def setup
     DatabaseCleaner.start
 
-    attributes = {'identifier' => 'r3m', 'rootUrl' => 'http://r3m.com'}
-    post('/sources', attributes)
+    attributes = { "identifier" => "r3m", "rootUrl" => "http://r3m.com" }
+    post("/sources", attributes)
 
-    attributes2 = {'identifier' => '123', 'rootUrl' => 'http://123.com'}
-    post('/sources', attributes2)
+    attributes2 = { "identifier" => "123", "rootUrl" => "http://123.com" }
+    post("/sources", attributes2)
 
     payload1 = '{
       "url":"http://r3m.com/blog",
@@ -100,25 +100,25 @@ class OperatingSystemTest < Minitest::Test
       "ip":"63.29.38.211"
     }'
 
-    post('/sources/r3m/data', {'payload' => payload2})
-    post('/sources/r3m/data', {'payload' => payload5})
-    post('/sources/r3m/data', {'payload' => payload3})
-    post('/sources/r3m/data', {'payload' => payload1})
-    post('/sources/r3m/data', {'payload' => payload4})
-    post('/sources/r3m/data', {'payload' => payload6})
+    post("/sources/r3m/data", "payload" => payload2)
+    post("/sources/r3m/data", "payload" => payload5)
+    post("/sources/r3m/data", "payload" => payload3)
+    post("/sources/r3m/data", "payload" => payload1)
+    post("/sources/r3m/data", "payload" => payload4)
+    post("/sources/r3m/data", "payload" => payload6)
   end
 
   def test_it_does_not_store_duplicate_operating_systems
     actual_operating_systems = TrafficSpy::OperatingSystem.all.sort
 
-    actual = actual_operating_systems.map { |o| o.operating_system }
+    actual = actual_operating_systems.map(&:operating_system)
     expected = ["Windows 7", "Windows 8.1", "OS X 10.8.2"]
 
     assert_equal expected, actual
   end
 
   def test_it_ranks_visits_for_operating_systems
-    identifier = 'r3m'
+    identifier = "r3m"
     expected_order = ["Windows 7", "Windows 8.1", "OS X 10.8.2"]
     expected_visits = [3, 2, 1]
     expected = expected_order.zip(expected_visits).to_h
