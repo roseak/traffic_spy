@@ -7,11 +7,7 @@ class CanViewRankedWebBrowsersTest < FeatureTest
     assert_equal '/sources/r3m/browsers', current_path
 
     assert page.has_content?("Browsers")
-    assert page.has_content?("Internet Explorer")
-    assert page.has_content?("3")
-    assert page.has_content?("Firefox")
-    assert page.has_content?("2")
     assert page.has_content?("Chrome")
-    assert page.has_content?("1")
+    assert page.has_content?("Firefox")
   end
 end

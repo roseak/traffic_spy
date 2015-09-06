@@ -23,8 +23,6 @@ class CanAccessUrlSpecificData < FeatureTest
     assert page.has_content?("Count")
     assert page.has_content?("http://www.google.com")
     assert page.has_content?("http://www.bing.com")
-    assert page.has_content?("2")
-    assert page.has_content?("1")
   end
 
   def test_can_access_url_specific_browsers_by_popularity
@@ -35,8 +33,8 @@ class CanAccessUrlSpecificData < FeatureTest
 
     assert page.has_content?("Browser")
     assert page.has_content?("Count")
-    assert page.has_content?("Internet Explorer")
-    assert page.has_content?("3")
+    assert page.has_content?("Chrome")
+    assert page.has_content?("Firefox")
   end
 
   def test_can_access_url_specific_operating_systems_by_popularity
@@ -47,8 +45,9 @@ class CanAccessUrlSpecificData < FeatureTest
 
     assert page.has_content?("Operating System")
     assert page.has_content?("Count")
+    assert page.has_content?("OS X 10.10.1")
     assert page.has_content?("Windows 7")
-    assert page.has_content?("3")
+    assert page.has_content?("Linux i586")
   end
 
   def test_can_access_url_specific_request_types
