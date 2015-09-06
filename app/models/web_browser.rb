@@ -3,9 +3,7 @@ module TrafficSpy
     has_many :visits
 
     def self.web_browsers_for_a_client(identifier)
-      Visit.visits_for_a_client(identifier).map do |visit|
-        visit.web_browser
-      end
+      Visit.visits_for_a_client(identifier).map(&:web_browser)
     end
 
     def self.web_browsers_grouped(identifier)
