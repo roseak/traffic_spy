@@ -141,6 +141,12 @@ module TrafficSpy
       end
     end
 
+    get '/sources/:identifier/responsetime' do |identifier|
+      @time = Client.avg_response_time(identifier)
+
+      erb :response_time
+    end
+
     post '/sources/:identifier/data' do |identifier|
       legit = Payload.payload_legit?(params)
 

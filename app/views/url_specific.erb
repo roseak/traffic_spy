@@ -1,11 +1,17 @@
 <table class="table">
   <tbody>
-    <% @params[:data].each do |url, count| %>
       <tr>
-        <td><%= url %></td>
-        <td><%= count %></td>
+        <td>Shortest Response Time</td>
+        <td><%=@params[:data]["min"]%></td>
       </tr>
-    <% end %>
+      <tr>
+        <td>Longest Response Time</td>
+        <td><%=@params[:data]["max"]%></td>
+      </tr>
+      <tr>
+        <td>Average Response Time</td>
+        <td><%=@params[:data]["avg"]%></td>
+      </tr>
   </tbody>
 </table>
 <div class="panel panel-default">

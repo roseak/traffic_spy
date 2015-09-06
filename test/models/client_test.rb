@@ -1,6 +1,6 @@
 require "./test/test_helper"
 
-class UrlTest < Minitest::Test
+class UrlTest < Minitest::Test 
   include Rack::Test::Methods
 
   def app
@@ -138,97 +138,10 @@ class UrlTest < Minitest::Test
     post("/sources/r3m/data", "payload" => payload8)
   end
 
-  def test_can_find_all_urls_for_identifier
-    identifier = "r3m"
+  def test_can_get_avg_response_time
+    result = TrafficSpy::Client.avg_response_time('r3m')
 
-    result = TrafficSpy::Url.urls_for_a_client(identifier)
-    assert_equal 3, result.length
-  end
-
-  def test_it_determines_visits_for_urls
-    identifier = "r3m"
-
-    expected_urls = ["http://r3m.com/blog", "http://r3m.com/pizza", "http://r3m.com/jonothy"]
-    expected_visits = [4, 2, 1]
-    expected = expected_urls.zip(expected_visits).to_h
-
-    actual_as_objects = TrafficSpy::Url.url_visits(identifier)
-    actual_for_comparison = actual_as_objects.map do |k, v|
-      [k.url, v]
-    end.to_h
-    actual_for_comparison = actual_for_comparison.sort_by { |_url, visits| -visits }.to_h
-
-    assert_equal expected, actual_for_comparison
-  end
-
-  def test_it_ranks_visits_for_urls
-    identifier = "r3m"
-
-    expected_order = ["blog", "pizza", "jonothy"]
-    expected_visits = [4, 2, 1]
-    expected = expected_order.zip(expected_visits).to_h
-
-    actual = TrafficSpy::Url.ranked_url_string_visits(identifier)
-
-    assert_equal expected, actual
-  end
-
-  def test_can_format_urls
-    tail = TrafficSpy::Url.tail("http://superhappyfuntime.com/super/happy")
-    assert_equal "super/happy", tail
-  end
-
-  def test_can_get_response_times
-    identifier = "r3m"
-    path = "blog"
-    responded = TrafficSpy::Url.responded_in(identifier, path)
-    assert_equal 25, responded["min"]
-    assert_equal 40, responded["max"]
-    assert_equal 34, responded["avg"]
-  end
-
-  def test_can_get_refferers
-    identifier = "r3m"
-    path = "blog"
-    actual = TrafficSpy::Url.referrers(identifier, path)
-    expected = {
-      "http://www.google.com" => 2,
-      "http://www.yahoo.com" => 1,
-      "http://www.bing.com" => 1,
-    }
-    assert_equal expected, actual
-  end
-
-  def test_can_get_browsers
-    identifier = "r3m"
-    path = "blog"
-    actual = TrafficSpy::Url.browsers(identifier, path)
-    expected = {
-      "Chrome" => 2,
-      "Firefox" => 1,
-      "Internet Explorer" => 1,
-    }
-    assert_equal expected, actual
-  end
-
-  def test_can_get_operating_systems
-    identifier = "r3m"
-    path = "blog"
-    actual = TrafficSpy::Url.operating_systems(identifier, path)
-    expected = {
-      "Windows 7" => 2,
-      "Linux i586" => 1,
-      "OS X 10.10.1" => 1,
-    }
-    assert_equal expected, actual
-  end
-
-  def test_can_get_request_types
-    identifier = "r3m"
-    path = "blog"
-    actual = TrafficSpy::Url.request_types(identifier, path)
-    expected = ["GET"]
-    assert_equal expected, actual
+    assert_equal 37, result
   end
 
   def teardown
