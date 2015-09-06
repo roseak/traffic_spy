@@ -136,7 +136,7 @@ module TrafficSpy
     def test_it_can_get_total_received_for_event
       event = Event.find_by(name: "socialLogin")
       expected = 2
-      actual = Event.count(event)
+      actual = Event.count_for_client(event, 'r3m')
       assert_equal expected, actual
     end
 

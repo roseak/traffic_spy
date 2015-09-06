@@ -131,7 +131,7 @@ module TrafficSpy
           identifier: identifier,
           path: "#{identifier} - #{event}",
           title: "Event Specific Data",
-          total: Event.count(this_event),
+          total: Event.count_for_client(this_event, identifier),
           data: Event.all_sorted_timestamps(this_event),
         }
         erb :event

@@ -34,8 +34,11 @@ module TrafficSpy
       ranked_events_for_a_client(identifier).first.first
     end
 
-    def self.count(event)
-      event.visits.size
+    def self.count_for_client(event, identifier)
+      binding.pry
+      Client.find_by(identifier: identifier).urls
+                                            .map(&:visits).flatten
+                                            .map(&:event).count(event)
     end
 
     def self.timestamps(event)
