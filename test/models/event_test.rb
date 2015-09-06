@@ -64,7 +64,7 @@ module TrafficSpy
     def test_it_does_not_store_the_same_event_multiple_times
       expected_events = ["boo", "differentEvent", "socialLogin"]
       actual = TrafficSpy::Event.all
-      actual_events = actual.map.(&:name)
+      actual_events = actual.map(&:name)
 
       assert_equal expected_events.sort, actual_events.sort
     end
