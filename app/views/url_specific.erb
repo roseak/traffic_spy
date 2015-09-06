@@ -65,8 +65,22 @@
     </tbody>
   </table>
 </div>
-<ul class="list-group">
-  <% @params[:http_verbs].each do |verb| %>
-    <li class="list-group-item"><%= verb %></li>
-  <% end %>
+<div class="panel panel-default">
+  <div class="panel-heading">Most Popular Request Types</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Request Type</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @params[:http_verbs].each do |verb| %>
+      <tr>
+        <td><%= verb %></td>
+        <td>Count</td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 </li>
