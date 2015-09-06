@@ -133,6 +133,13 @@ module TrafficSpy
       assert_equal expected, actual
     end
 
+    def test_it_can_get_total_received_for_event
+      event = Event.find_by(name: "socialLogin")
+      expected = 2
+      actual = Event.count(event)
+      assert_equal expected, actual
+    end
+
     def app
       TrafficSpy::Server
     end

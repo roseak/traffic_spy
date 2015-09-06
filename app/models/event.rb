@@ -28,6 +28,10 @@ module TrafficSpy
       ranked_events_for_a_client(identifier).first.first
     end
 
+    def self.count(event)
+      event.visits.size
+    end
+
     def self.timestamps(event)
       event.visits.map(&:requested_at).map do |time|
         hour = Time.parse(time).strftime("%l:00%P")
