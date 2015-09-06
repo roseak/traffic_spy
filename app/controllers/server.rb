@@ -111,7 +111,7 @@ module TrafficSpy
           identifier: identifier,
           path: "#{identifier}/#{url}",
           title: "URL Specific Data",
-          data: Url.responded_in(identifier, url),
+          response: Url.responded_in(identifier, url),
           referrers: Url.referrers(identifier, url),
           browsers: Url.browsers(identifier, url),
           operating_systems: Url.operating_systems(identifier, url),

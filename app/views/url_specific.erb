@@ -1,13 +1,22 @@
-<table class="table">
-  <tbody>
-    <% @params[:data].each do |url, count| %>
+<div class="panel panel-default">
+  <div class="panel-heading">Response Time Statistics</div>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= url %></td>
-        <td><%= count %></td>
+        <th>Response Time</th>
+        <th>Miliseconds</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @params[:response].each do |stat, time| %>
+        <tr>
+          <td><%= stat %></td>
+          <td><%= time %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <div class="panel panel-default">
   <div class="panel-heading">Most Popular Referrers</div>
   <table class="table">
@@ -75,10 +84,10 @@
       </tr>
     </thead>
     <tbody>
-      <% @params[:http_verbs].each do |verb| %>
+      <% @params[:http_verbs].each do |verb, count| %>
       <tr>
         <td><%= verb %></td>
-        <td>Count</td>
+        <td><%= count %></td>
       </tr>
       <% end %>
     </tbody>
