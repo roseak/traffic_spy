@@ -9,6 +9,8 @@ require 'minitest/pride'
 require 'capybara'
 require 'database_cleaner'
 require 'tilt/erb'
+require 'simplecov'
+SimpleCov.start
 
 Capybara.app = TrafficSpy::Server
 
