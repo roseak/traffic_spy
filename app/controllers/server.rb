@@ -101,7 +101,6 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/urls/*' do |identifier, url|
-
       if Url.has_been_requested?(identifier, url)
         @params = {
           identifier: identifier,
@@ -118,6 +117,18 @@ module TrafficSpy
         @params = { message: "Url has not been requested" }
         erb :error
       end
+    end
+
+    get '/sources/:identifier/events/*' do |identifier, event|
+      this_event = Event.find_by(name: event)
+      @params = {
+        identifier: identifier,
+        path: "#{identifier} - #{event}",
+        title: "Event Specific Data",
+        total: Event.count(this_event),
+        data: Event.all_sorted_timestamps(this_event),
+      }
+      erb :event
     end
 
     post '/sources/:identifier/data' do |identifier|
