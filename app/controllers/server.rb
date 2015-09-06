@@ -139,7 +139,6 @@ module TrafficSpy
       end
     end
 
-<<<<<<< HEAD
     get '/sources/:identifier/responsetime' do |identifier|
       @time = Client.avg_response_time(identifier)
 
@@ -147,9 +146,6 @@ module TrafficSpy
     end
 
     post '/sources/:identifier/data' do |identifier|
-=======
-    post "/sources/:identifier/data" do |identifier|
->>>>>>> c5bb6f451e72d1cbf431a91af95b2416ae887be6
       legit = Payload.payload_legit?(params)
 
       if legit
