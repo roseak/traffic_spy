@@ -99,7 +99,7 @@ class WebBrowserTest < Minitest::Test
       "ip":"63.29.38.216"
     }'
 
-    posl("/sources/r3m/data", "payload" => payload2)
+    post("/sources/r3m/data", "payload" => payload2)
     post("/sources/r3m/data", "payload" => payload5)
     post("/sources/r3m/data", "payload" => payload3)
     post("/sources/r3m/data", "payload" => payload1)
