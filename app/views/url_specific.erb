@@ -1,22 +1,24 @@
 <% @params[:data].each do |contents| %>
 <% table = contents.last %>
-  <div class="panel panel-default">
-    <div class="panel-heading"><%= table[:title] %></div>
-    <table class="table">
+  <div class="row well">
+    <span class="header"><h3><%= table[:title] %></h3></span>
+    <div class="row well">
+    <table class="table table-condensed">
       <thead>
         <tr>
-          <th><%= table[:headers].first %></th>
-          <th><%= table[:headers].last %></th>
+          <th class="text-left span3"><%= table[:headers].first %></th>
+          <th class="text-right span3"><%= table[:headers].last %></th>
         </tr>
       </thead>
       <tbody>
         <% table[:rows].each do |label, value| %>
           <tr>
-            <td><%= label %></td>
-            <td><%= value %></td>
+            <td class="text-left span3"><%= label %></td>
+            <td class="text-right span3"><%= value %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
+  </div>
   </div>
 <% end %>
