@@ -1,3 +1,29 @@
+/* LAYOUT STYLING ====================
+ */
+
+body {
+  background-color: #5FA6A9
+}
+
+.identifier, .page {
+  font-size: 2em;
+}
+
+.page {
+  margin-left: 200px;
+}
+
+.glyphicon {
+  font-size: 2em;
+}
+/* LIST STYLING ======================
+ */
+
+.table {
+  background-color: #EEE
+}
+/* ERROR PAGE =========================
+ */
 .background {
   background-image: url("https://static.pexels.com/photos/6571/pexels-photo.jpeg");
   background-size: cover;

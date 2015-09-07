@@ -43,6 +43,7 @@ module TrafficSpy
         identifier: identifier,
         path: identifier,
         title: "URLs",
+        header: "URL",
         url_title: "URL",
         count_title: "Requests",
         data: Url.ranked_url_string_visits(identifier)
@@ -138,6 +139,7 @@ module TrafficSpy
 
     get '/sources/:identifier/responsetime' do |identifier|
       @params = { 
+        path: identifier,
         identifier: identifier,
         title: "Average Response Time",
         time: Client.avg_response_time(identifier)

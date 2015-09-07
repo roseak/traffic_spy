@@ -1,16 +1,18 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= @params[:header] %></th>
-      <th><%= @params[:comparison] %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @params[:data].each do |url, count| %>
+<div class = 'panel panel-default'>
+  <table class="table">
+    <thead>
       <tr>
-        <td><a href="urls/<%= url %>"><%= url %></td>
-        <td><%= count %></td>
+        <th><%= @params[:header] %></th>
+        <th><%= @params[:comparison] %></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @params[:data].each do |url, count| %>
+        <tr>
+          <td><a href="urls/<%= url %>"><%= url %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
