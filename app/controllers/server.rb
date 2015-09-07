@@ -43,6 +43,7 @@ module TrafficSpy
         identifier: identifier,
         path: identifier,
         title: "URLs",
+        header: "URL",
         url_title: "URL",
         count_title: "Requests",
         data: Url.ranked_url_string_visits(identifier)

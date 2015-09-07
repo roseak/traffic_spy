@@ -1,3 +1,18 @@
+/* LAYOUT STYLING ====================
+ */
+
+body {
+  background-color: #72968D
+}
+/* LIST STYLING ======================
+ */
+
+.table {
+  background-color: #EEE
+
+}
+/* ERROR PAGE =========================
+ */
 .background {
   background-image: url("https://static.pexels.com/photos/6571/pexels-photo.jpeg");
   background-size: cover;
