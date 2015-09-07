@@ -1,10 +1,14 @@
-<h4>Total Received: <%= params[:total] %></h4>
+<div class = 'containter well'>
+  <h2>Total Received: <%= params[:total] %></h2>
+</div>
 
-<table class="table">
-  <% params[:data].each do |time, count| %>
-    <tr>
-      <td><%= time %></td>
-      <td><%= count %></td>
-    </tr>
-  <% end %>
-</table>
+<div class = 'panel panel-default'>
+  <table class="table">
+    <% params[:data].each do |time, count| %>
+      <tr>
+        <td><%= time %></td>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
