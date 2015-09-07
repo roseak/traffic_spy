@@ -182,9 +182,9 @@ class UrlTest < Minitest::Test
     identifier = "r3m"
     path = "blog"
     responded = TrafficSpy::Url.responded_in(identifier, path)
-    assert_equal 25, responded["min"]
-    assert_equal 40, responded["max"]
-    assert_equal 34, responded["avg"]
+    assert_equal 25, responded["Min"]
+    assert_equal 40, responded["Max"]
+    assert_equal 34, responded["Average"]
   end
 
   def test_can_get_refferers

@@ -40,9 +40,9 @@ module TrafficSpy
     def self.responded_in(identifier, url)
       visits = url_object(identifier, url).visits
       {
-        "min" => visits.minimum(:responded_in).to_i,
-        "max" => visits.maximum(:responded_in).to_i,
-        "avg" => url_object(identifier, url).visits.average(:responded_in).to_i
+        "Min" => visits.minimum(:responded_in).to_i,
+        "Max" => visits.maximum(:responded_in).to_i,
+        "Average" => url_object(identifier, url).visits.average(:responded_in).to_i
       }
     end
 
