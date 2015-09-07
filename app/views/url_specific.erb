@@ -1,22 +1,3 @@
-<div class="panel panel-default">
-  <div class="panel-heading">Response Time Statistics</div>
-  <table class="table">
-    <tbody>
-        <tr>
-          <td>Shortest Response Time</td>
-          <td><%=@params[:response]["min"]%></td>
-        </tr>
-        <tr>
-          <td>Longest Response Time</td>
-          <td><%=@params[:response]["max"]%></td>
-        </tr>
-        <tr>
-          <td>Average Response Time</td>
-          <td><%=@params[:response]["avg"]%></td>
-        </tr>
-    </tbody>
-  </table>
-</div>
 <% @params[:data].each do |contents| %>
 <% table = contents.last %>
   <div class="panel panel-default">
@@ -39,4 +20,3 @@
     </table>
   </div>
 <% end %>
->>>>>>> url-specific-view-appearance

@@ -8,9 +8,9 @@ class CanAccessUrlSpecificData < FeatureTest
     assert_equal "/sources/r3m/urls/blog", current_path
 
     assert page.has_content?("URL Specific Data")
-    assert page.has_content?("Shortest Response Time")
-    assert page.has_content?("Longest Response Time")
-    assert page.has_content?("Average Response Time")
+    assert page.has_content?("Min")
+    assert page.has_content?("Max")
+    assert page.has_content?("Average")
   end
 
   def test_can_access_url_specific_referrers_by_popularity
