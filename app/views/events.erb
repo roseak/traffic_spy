@@ -1,8 +1,9 @@
+<div class = 'contianer well'>
+  <h2 class="lead">Most Received Event: <strong><%= @params[:most_received_event] %></strong></h2>
 
-<h2 class="lead">Most Received Event: <strong><%= @params[:most_received_event] %></strong></h2>
-
-<div class="list-group">
-  <ul>
-    <%= partial :'partials/event_count', collection: @event_counts %>
-  </ul>
+  <div class="list-group">
+    <ul>
+      <%= partial :'partials/event_count', collection: @event_counts %>
+    </ul>
+  </div>
 </div>
