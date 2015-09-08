@@ -44,14 +44,15 @@ module TrafficSpy
         [visit, visit.event]
       end
     end
-    
-    def self.timestamps(event, identifier)
 
-      # event_and_visit = 
-      relevant_visits = event_and_visit(identifier).select do |_visit, v_event|
+    def self.relevant_visits(event, identifier)
+      event_and_visit(identifier).select do |_visit, v_event|
         v_event.name == event.name
       end
-      visits = relevant_visits.map { |v, _e| v }
+    end
+    
+    def self.timestamps(event, identifier)
+      visits = relevant_visits(event, identifier).map { |v, _e| v }
 
       visits.map(&:requested_at).map do |time|
         Time.parse(time).strftime("%l:00%P")
@@ -72,11 +73,9 @@ module TrafficSpy
     end
 
     def self.all_sorted_timestamps(event, identifier)
-      times = blank_twenty_four_counter
-      sorted_timestamps(event, identifier).each do |time, hits|
-        times[time] = hits
-      end
-      times
+      blank_twenty_four_counter.map do |hour, _count|
+        [hour, sorted_timestamps(event, identifier)[hour]]
+      end.to_h
     end
   end
 end
