@@ -49,6 +49,5 @@ module TrafficSpy
         :headers => ["Request Type", "Count"],
         :rows => Url.ranked_request_types_for_url(@identifier, @url) }
     end
-
   end
 end
