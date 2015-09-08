@@ -9,7 +9,7 @@
     <tbody>
       <% @params[:data].each do |url, count| %>
         <tr>
-          <td><a href="urls/<%= url %>"><%= url %></td>
+          <td><%= url %></td>
           <td><%= count %></td>
         </tr>
       <% end %>
