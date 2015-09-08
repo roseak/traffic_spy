@@ -1,7 +1,7 @@
 require "./test/test_helper"
 
 module TrafficSpy
-  class ItGivesAccessInstructionsFromRootPath < FeatureTest
+  class ItGivesAccessInstructionsFromRootPathTest < FeatureTest
 
     def test_it_gives_instructions_from_root
       visit '/'
