@@ -1,4 +1,4 @@
-require './test/test_helper'
+require "./test/test_helper"
 
 class CanAccessUrlSpecificData < FeatureTest
   def test_can_access_url_specific_response_time

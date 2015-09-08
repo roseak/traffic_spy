@@ -1,8 +1,8 @@
-require './test/test_helper'
+require "./test/test_helper"
 module TrafficSpy
   class DisplaysMostToLeastRequestedEventsTest < FeatureTest
-    attr_reader :payload1, :payload2, :payload3, :payload4, :payload5, :payload6,
-                :attributes1, :attributes2
+    attr_reader :payload1, :payload2, :payload3, :payload4, :payload5,
+                :payload6, :attributes1, :attributes2
     def test_can_get_list_of_urls_from_most_to_least_requested
       click_link("Events")
 
