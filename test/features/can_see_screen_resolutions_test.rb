@@ -6,7 +6,7 @@ class CanSeeScreenResolutionsTest < FeatureTest
     click_link("Screen Resolutions")
     assert_equal "/sources/r3m/resolution", current_path
 
-    assert page.has_content?("Screen Resolutions")
+    assert page.has_content?("Resolution")
     assert page.has_content?("1920x1280")
     assert page.has_content?("3")
     assert page.has_content?("1366x768")
