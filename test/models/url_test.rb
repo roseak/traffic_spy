@@ -148,7 +148,8 @@ class UrlTest < Minitest::Test
   def test_it_determines_visits_for_urls
     identifier = "r3m"
 
-    expected_urls = ["http://r3m.com/blog", "http://r3m.com/pizza", "http://r3m.com/jonothy"]
+    expected_urls = ["http://r3m.com/blog", "http://r3m.com/pizza",
+                     "http://r3m.com/jonothy"]
     expected_visits = [4, 2, 1]
     expected = expected_urls.zip(expected_visits).to_h
 
@@ -156,7 +157,9 @@ class UrlTest < Minitest::Test
     actual_for_comparison = actual_as_objects.map do |k, v|
       [k.url, v]
     end.to_h
-    actual_for_comparison = actual_for_comparison.sort_by { |_url, visits| -visits }.to_h
+    actual_for_comparison = actual_for_comparison.sort_by do |_url, visits|
+      -visits
+    end.to_h
 
     assert_equal expected, actual_for_comparison
   end
@@ -227,7 +230,7 @@ class UrlTest < Minitest::Test
     identifier = "r3m"
     path = "blog"
     actual = TrafficSpy::Url.ranked_request_types_for_url(identifier, path)
-    expected = { "GET" => 3, "POST" => 1 } 
+    expected = { "GET" => 3, "POST" => 1 }
     assert_equal expected, actual
   end
 

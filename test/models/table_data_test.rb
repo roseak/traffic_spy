@@ -124,15 +124,15 @@ class TableDataTest < Minitest::Test
   end
 
   def test_it_converts_a_hash_to_an_object
-    data = { :cars => ["Ford", "Buick", "Mercedes"] }
+    data = { cars: ["Ford", "Buick", "Mercedes"] }
     td_object = TrafficSpy::TableData.new(data)
 
     assert_equal data[:cars], td_object.cars
   end
 
   def test_it_converts_another_hash_to_an_object
-    data = { :cereal => ["cheerios", "wheaties"],
-             :colors => ["red", "blue", "purple"] 
+    data = { cereal: ["cheerios", "wheaties"],
+             colors: ["red", "blue", "purple"]
            }
     td_object = TrafficSpy::TableData.new(data)
 

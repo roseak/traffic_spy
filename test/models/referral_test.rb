@@ -109,7 +109,8 @@ class ReferralTest < Minitest::Test
   end
 
   def test_it_does_not_store_duplicate_referrals
-    expected_referrals = ["http://google.com", "http://webcrawler.com", "http://yahoo.com"]
+    expected_referrals = ["http://google.com", "http://webcrawler.com",
+                          "http://yahoo.com"]
     actual = TrafficSpy::Referral.all
 
     assert_equal expected_referrals.length, actual.length

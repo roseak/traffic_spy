@@ -123,7 +123,8 @@ class OperatingSystemTest < Minitest::Test
     expected_visits = [3, 2, 1]
     expected = expected_order.zip(expected_visits).to_h
 
-    actual = TrafficSpy::OperatingSystem.ranked_operating_systems_with_count(identifier)
+    actual = TrafficSpy::OperatingSystem.
+             ranked_operating_systems_with_count(identifier)
 
     assert_equal expected, actual
   end
