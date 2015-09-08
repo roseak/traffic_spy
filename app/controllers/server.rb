@@ -68,7 +68,7 @@ module TrafficSpy
     get "/sources/:identifier/os" do |identifier|
       @params = {
         identifier: identifier,
-        path: "#{identifier}/operating systems",
+        path: "#{identifier}/os",
         title: "Operating Systems",
         header: "OS",
         comparison: "Requests",
@@ -81,7 +81,7 @@ module TrafficSpy
     get "/sources/:identifier/browsers" do |identifier|
       @params = {
         identifier: identifier,
-        path: "#{identifier}/web browsers",
+        path: "#{identifier}/browsers",
         title: "Web Browsers",
         header: "Browsers",
         comparison: "Requests",
@@ -125,7 +125,7 @@ module TrafficSpy
         this_event = Event.find_by(name: event)
         @params = {
           identifier: identifier,
-          path: "#{identifier} - #{event}",
+          path: "#{identifier}/events/#{event}",
           title: "Event Specific Data",
           total: Event.count_for_client(this_event, identifier),
           data: Event.all_sorted_timestamps(this_event, identifier),
@@ -139,7 +139,7 @@ module TrafficSpy
 
     get '/sources/:identifier/responsetime' do |identifier|
       @params = {
-        path: "#{identifier}/response time",
+        path: "#{identifier}/responsetime",
         identifier: identifier,
         title: "Average Response Time",
         time: Client.avg_response_time(identifier)
