@@ -1,6 +1,6 @@
 require "./test/test_helper"
 
-class UrlTest < Minitest::Test 
+class ClientTest < Minitest::Test
   include Rack::Test::Methods
 
   def app
@@ -139,7 +139,7 @@ class UrlTest < Minitest::Test
   end
 
   def test_can_get_avg_response_time
-    result = TrafficSpy::Client.avg_response_time('r3m')
+    result = TrafficSpy::Client.avg_response_time("r3m")
 
     assert_equal 37, result
   end

@@ -134,7 +134,8 @@ class ScreenResTest < Minitest::Test
 
   def test_it_can_get_resolutions_for_client
     actual = TrafficSpy::Resolution.all_for_client("r3m")
-    assert_equal ["1920x1280", "1920x1280", "1920x1280", "1920x1280", "2500x1800", "800x600"], actual
+    assert_equal ["1920x1280", "1920x1280", "1920x1280",
+                  "1920x1280", "2500x1800", "800x600"], actual
   end
 
   def test_it_can_sort_all_for_client_by_requests
