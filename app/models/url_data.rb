@@ -10,18 +10,14 @@ module TrafficSpy
 
     def self.prepare(identifier, url)
       url_data = new(identifier: identifier, url: url)
-      url_data.data = 
-      { 
+      url_data.data =
+      {
         response_stats: url_data.response_stats,
         referrers: url_data.referrers,
         browsers: url_data.browsers,
         operating_systems: url_data.operating_systems,
         request_types: url_data.request_types
       }
-    end
-
-    def http_verbs
-      TableData.new(Url.ranked_request_types_for_url(@identifier, @url))
     end
 
     def response_stats
