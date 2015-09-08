@@ -1,3 +1,4 @@
-<li><a href = "<%=request.path_info%>/<%=event_count.name%>"><%= event_count.name %></a> 
- : <%=event_count.count%></li>
-
+<li class="list-group-item">
+  <span class="badge"><%=event_count.count%></span>
+  <a href = "<%=request.path_info%>/<%=event_count.name%>"><%= event_count.name %></a>
+</li>

@@ -41,7 +41,7 @@ module TrafficSpy
     get "/sources/:identifier/urls" do |identifier|
       @params = {
         identifier: identifier,
-        path: identifier,
+        path: "#{identifier}/urls",
         title: "URLs",
         header: "URL",
         url_title: "URL",
@@ -49,14 +49,14 @@ module TrafficSpy
         data: Url.ranked_url_string_visits(identifier)
       }
 
-      erb :list
+      erb :urls
     end
 
     get "/sources/:identifier/events" do |identifier|
       @event_counts = Event.ranked_event_counts(identifier)
       @params = {
         identifier: identifier,
-        path: identifier,
+        path: "#{identifier}/events",
         title: "Aggregate Event Data",
         most_received_event: Event.max(identifier),
         events: Event.events_for_a_client(identifier).map(&:name).uniq
@@ -68,7 +68,7 @@ module TrafficSpy
     get "/sources/:identifier/os" do |identifier|
       @params = {
         identifier: identifier,
-        path: identifier,
+        path: "#{identifier}/operating systems",
         title: "Operating Systems",
         header: "OS",
         comparison: "Requests",
@@ -81,7 +81,7 @@ module TrafficSpy
     get "/sources/:identifier/browsers" do |identifier|
       @params = {
         identifier: identifier,
-        path: identifier,
+        path: "#{identifier}/web browsers",
         title: "Web Browsers",
         header: "Browsers",
         comparison: "Requests",
@@ -94,7 +94,7 @@ module TrafficSpy
     get "/sources/:identifier/resolution" do |identifier|
       @params = {
         identifier: identifier,
-        path: identifier,
+        path: "#{identifier}/resolutions",
         title: "Screen Resolutions",
         header: "Resolution",
         comparison: "Requests",
@@ -109,7 +109,7 @@ module TrafficSpy
         url_data = UrlData.prepare(identifier, url)
         @params = {
           identifier: identifier,
-          path: "#{identifier}/#{url}",
+          path: "#{identifier}/urls/#{url}",
           title: "URL Specific Data",
           data: url_data
         }
@@ -138,8 +138,8 @@ module TrafficSpy
     end
 
     get '/sources/:identifier/responsetime' do |identifier|
-      @params = { 
-        path: identifier,
+      @params = {
+        path: "#{identifier}/response time",
         identifier: identifier,
         title: "Average Response Time",
         time: Client.avg_response_time(identifier)

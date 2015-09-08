@@ -4,11 +4,19 @@
 
 <div class = 'panel panel-default'>
   <table class="table">
-    <% params[:data].each do |time, count| %>
+    <thead>
       <tr>
-        <td><%= time %></td>
-        <td><%= count %></td>
+        <th>Time</th>
+        <th>Count</th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% params[:data].each do |time, count| %>
+        <tr>
+          <td><%= time %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
 </div>
