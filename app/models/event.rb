@@ -37,18 +37,22 @@ module TrafficSpy
       visits_for_a_client.map(&:visits).flatten.map(&:event).count(event)
     end
 
-    def self.timestamps(event, identifier)
+    def self.event_and_visit(identifier)
       client = Client.find_by(identifier: identifier)
       visits = client.urls.map(&:visits).flatten
-
-      event_and_visit = visits.map do |visit|
+      visits.map do |visit|
         [visit, visit.event]
       end
+    end
 
-      relevant_visits = event_and_visit.select do |_visit, v_event|
+    def self.relevant_visits(event, identifier)
+      event_and_visit(identifier).select do |_visit, v_event|
         v_event.name == event.name
       end
-      visits = relevant_visits.map { |v, _e| v }
+    end
+    
+    def self.timestamps(event, identifier)
+      visits = relevant_visits(event, identifier).map { |v, _e| v }
 
       visits.map(&:requested_at).map do |time|
         Time.parse(time).strftime("%l:00%P")
@@ -62,15 +66,16 @@ module TrafficSpy
       end
     end
 
+    def self.blank_twenty_four_counter
+      times = [*1..24].map do |hour| 
+        [Time.parse("#{hour}:00").strftime("%l:00%P"), 0]
+      end.to_h
+    end
+
     def self.all_sorted_timestamps(event, identifier)
-      times = Hash.new
-      24.times do |hour|
-        times[Time.parse("#{hour}:00").strftime("%l:00%P")] = 0
-      end
-      sorted_timestamps(event, identifier).each do |time, hits|
-        times[time] = hits
-      end
-      times
+      blank_twenty_four_counter.map do |hour, _count|
+        [hour, sorted_timestamps(event, identifier)[hour]]
+      end.to_h
     end
   end
 end
