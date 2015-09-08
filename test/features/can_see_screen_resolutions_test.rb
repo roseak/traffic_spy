@@ -1,9 +1,9 @@
-require './test/test_helper'
+require "./test/test_helper"
 
 class CanSeeScreenResolutionsTest < FeatureTest
   def test_can_get_list_of_screen_resolutions
-    visit('/sources/r3m')
-    click_link('Screen Resolutions')
+    visit("/sources/r3m")
+    click_link("Screen Resolutions")
     assert_equal "/sources/r3m/resolution", current_path
 
     assert page.has_content?("Screen Resolutions")
